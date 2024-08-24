@@ -10,11 +10,11 @@ st.markdown("""
 .circle {
     display: inline-block;
     border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    line-height: 27px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     margin: 5px;
     color: white;
 }
