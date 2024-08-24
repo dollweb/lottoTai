@@ -116,3 +116,20 @@ if st.button(button_text):
 
     # 모든 세트를 한 번에 출력
     st.markdown(number_sets_display, unsafe_allow_html=True)
+    
+# 배너 추가
+st.markdown("""
+<div style='text-align: center;'>
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+        new PartnersCoupang.G({
+            "id":803207,
+            "template":"carousel",
+            "trackingCode":"AF1929818",
+            "width":"500",
+            "height":"100",
+            "tsource":""
+        });
+    </script>
+</div>
+""", unsafe_allow_html=True)
