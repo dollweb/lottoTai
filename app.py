@@ -1,11 +1,12 @@
 import streamlit as st
 import random
+from datetime import datetime, timedelta
 
 # 제목
-st.title("Lotto Tai_v0.1(로또 T아이)")
+st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>Lotto Tai_v0.1(로또 T아이)</h2>", unsafe_allow_html=True)
 
 # 부제목 추가
-st.markdown("<h4 style='font-weight: bold;'>인공지능 생성 로또 번호를 통한 새로운 기회!!</h2>", unsafe_allow_html=True)
+st.markdown("<h5 style='font-weight: bold;'>로또번호 인공지능 생성!!</h5>", unsafe_allow_html=True)
 
 # CSS 스타일 정의
 st.markdown("""
@@ -26,6 +27,28 @@ st.markdown("""
 .red { background-color: red; }
 .gray { background-color: gray; }
 .green { background-color: green; }
+
+/* 버튼 스타일 */
+.stButton > button {
+    background-color: #f0f0f0; /* 밝은 회색 배경색 */
+    color: black; /* 글자색을 검정으로 변경 */
+    border: none; /* 테두리 없음 */
+    padding: 15px 32px; /* 여백 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    text-decoration: none; /* 텍스트 장식 없음 */
+    display: inline-block; /* 인라인 블록 요소 */
+    font-size: 16px; /* 글자 크기 */
+    margin: 4px 2px; /* 마진 */
+    cursor: pointer; /* 커서 모양 */
+    border-radius: 8px; /* 모서리 둥글기 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 그림자 효과 */
+    transition: background-color 0.3s, transform 0.2s; /* 효과 전환 */
+}
+
+.stButton > button:hover {
+    background-color: #e0e0e0; /* 호버 시 밝은 회색으로 변화 */
+    transform: translateY(-2px); /* 위로 이동 효과 */
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -43,8 +66,20 @@ st.session_state.daily_visits += 1
 st.sidebar.write(f"오늘 방문자 수: {st.session_state.daily_visits}")
 st.sidebar.write(f"전체 방문자 수: {st.session_state.total_visits}")
 
+# 현재 날짜 가져오기
+today = datetime.now()
+
+# 회차 및 날짜 설정
+if today.weekday() == 6:  # 일요일
+    # 다음 회차 및 날짜 계산
+    current_round = 1134 + 1  # 다음 회차
+    current_date = today + timedelta(days=1)  # 다음날 (월요일)
+else:
+    current_round = 1134
+    current_date = datetime(2024, 8, 24)  # 고정된 날짜
+
 # 버튼 클릭 시 동작
-if st.button("LOTTO 번호 5세트 생성하기"):
+if st.button(f"{current_round}회차({current_date.strftime('%Y.%m.%d')}) 로또번호 5세트 생성 버튼"):
     # 1부터 45까지의 숫자 생성
     numbers = list(range(1, 46))
     
