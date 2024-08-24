@@ -3,7 +3,8 @@ import random
 from datetime import datetime, timedelta
 
 # 제목
-st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>Lotto Tai_v0.1(로또 T아이)</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>Lotto Tai_v0.1</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>로또 T아이 버전0.1</h2>", unsafe_allow_html=True)
 
 # 부제목 추가
 st.markdown("<h5 style='font-weight: bold;'>로또번호 인공지능 생성!!</h5>", unsafe_allow_html=True)
@@ -33,11 +34,11 @@ st.markdown("""
     background-color: #f0f0f0; /* 밝은 회색 배경색 */
     color: black; /* 글자색을 검정으로 변경 */
     border: none; /* 테두리 없음 */
-    padding: 15px 32px; /* 여백 */
+    padding: 15px 30px; /* 여백 */
     text-align: center; /* 텍스트 중앙 정렬 */
     text-decoration: none; /* 텍스트 장식 없음 */
     display: inline-block; /* 인라인 블록 요소 */
-    font-size: 16px; /* 글자 크기 */
+    font-size: 15px; /* 글자 크기 */
     margin: 4px 2px; /* 마진 */
     cursor: pointer; /* 커서 모양 */
     border-radius: 8px; /* 모서리 둥글기 */
@@ -79,7 +80,8 @@ else:
     current_date = datetime(2024, 8, 24)  # 고정된 날짜
 
 # 버튼 클릭 시 동작
-if st.button(f"{current_round}회차({current_date.strftime('%Y.%m.%d')}) 로또번호 5세트 생성 버튼"):
+button_text = f"{current_round}회차({current_date.strftime('%Y.%m.%d')}) 로또번호 5세트 생성 버튼"
+if st.button(button_text):
     # 1부터 45까지의 숫자 생성
     numbers = list(range(1, 46))
     
