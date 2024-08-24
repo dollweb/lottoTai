@@ -2,12 +2,8 @@ import streamlit as st
 import random
 from datetime import datetime, timedelta
 
-# 제목
-st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h2>", unsafe_allow_html=True)
-st.markdown("<h5 style='font-size: 2.0em; font-weight: bold;'>Lotto Tai_v0.1</h5>", unsafe_allow_html=True)
-
-# 부제목 추가
-st.markdown("<h5 style='font-weight: bold;'>로또번호 인공지능 생성!!</h5>", unsafe_allow_html=True)
+# 현재 날짜 가져오기
+today = datetime.now()
 
 # CSS 스타일 정의
 st.markdown("""
@@ -53,6 +49,20 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# 회차 및 날짜 설정
+if today.weekday() == 6:  # 일요일
+    # 다음 회차 및 날짜 계산
+    current_round = 1134 + 1  # 다음 회차
+    current_date = today + timedelta(days=1)  # 다음날 (월요일)
+else:
+    current_round = 1134
+    current_date = today  # 현재 날짜 사용
+
+# 제목
+st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
+st.markdown("<h6 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h6>", unsafe_allow_html=True)
+st.markdown(f"<h6 style='font-weight: bold;'>{current_round}회차({current_date.strftime('%Y.%m.%d')})</h6>", unsafe_allow_html=True)
+
 # 방문자 카운트 초기화
 if 'total_visits' not in st.session_state:
     st.session_state.total_visits = 0
@@ -67,20 +77,8 @@ st.session_state.daily_visits += 1
 st.sidebar.write(f"오늘 방문자 수: {st.session_state.daily_visits}")
 st.sidebar.write(f"전체 방문자 수: {st.session_state.total_visits}")
 
-# 현재 날짜 가져오기
-today = datetime.now()
-
-# 회차 및 날짜 설정
-if today.weekday() == 6:  # 일요일
-    # 다음 회차 및 날짜 계산
-    current_round = 1134 + 1  # 다음 회차
-    current_date = today + timedelta(days=1)  # 다음날 (월요일)
-else:
-    current_round = 1134
-    current_date = datetime(2024, 8, 24)  # 고정된 날짜
-
 # 버튼 클릭 시 동작
-button_text = f"{current_round}회차({current_date.strftime('%Y.%m.%d')}) 로또번호 5세트 생성 버튼"
+button_text = "로또번호 5세트 생성 버튼"
 if st.button(button_text):
     # 1부터 45까지의 숫자 생성
     numbers = list(range(1, 46))
