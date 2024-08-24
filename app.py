@@ -3,8 +3,8 @@ import random
 from datetime import datetime, timedelta
 
 # 제목
-st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>Lotto Tai_v0.1</h2>", unsafe_allow_html=True)
-st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>로또 T아이 버전0.1</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h2>", unsafe_allow_html=True)
+st.markdown("<h5 style='font-size: 2.0em; font-weight: bold;'>Lotto Tai_v0.1</h5>", unsafe_allow_html=True)
 
 # 부제목 추가
 st.markdown("<h5 style='font-weight: bold;'>로또번호 인공지능 생성!!</h5>", unsafe_allow_html=True)
