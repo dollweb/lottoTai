@@ -133,3 +133,10 @@ st.markdown("""
     </script>
 </div>
 """, unsafe_allow_html=True)
+
+# iframe 배너 추가
+st.markdown("""
+<div style='text-align: center;'>
+    <iframe src="https://coupa.ng/cf3Jkx" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+</div>
+""", unsafe_allow_html=True)
