@@ -2,7 +2,10 @@ import streamlit as st
 import random
 
 # 제목
-st.title("LOTTO AI 생성기")
+st.title("Lotto Tai_v0.1(로또 T아이)")
+
+# 부제목 추가
+st.markdown("<h4 style='font-weight: bold;'>인공지능 생성 로또 번호를 통한 새로운 기회!!</h2>", unsafe_allow_html=True)
 
 # CSS 스타일 정의
 st.markdown("""
@@ -53,7 +56,7 @@ if st.button("LOTTO 번호 5세트 생성하기"):
         all_numbers.append(sorted_numbers)
     
     # 결과 출력
-    st.write("AI 생성 5가지 번호")
+    st.write("로또번호 정보만 제공하고, 투자의 책임은 본인에게 있습니다.")
     number_sets_display = ""  # 모든 세트를 저장할 변수
     
     for idx, number_set in enumerate(all_numbers):
