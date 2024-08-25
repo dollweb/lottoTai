@@ -5,12 +5,17 @@ from datetime import datetime, timedelta
 # 현재 날짜 가져오기
 today = datetime.now()
 
+# 로또 회차 계산
+start_date = datetime(2024, 8, 24)  # 기준 날짜
+round_duration = timedelta(weeks=1)  # 회차 간격 (1주)
+
+# 현재 날짜와 기준 날짜의 차이 계산
+weeks_difference = (today - start_date).days // 7
+current_round = 1134 + 1 # 1134회차부터 시작
+
 # 다음 토요일 날짜 계산
 days_until_saturday = (5 - today.weekday()) % 7  # 5는 토요일
 current_date = today + timedelta(days=days_until_saturday)
-
-# 회차 설정
-current_round = 1134  # 원하는 회차로 설정
 
 # CSS 스타일 정의
 st.markdown("""
