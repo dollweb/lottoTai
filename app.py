@@ -5,6 +5,13 @@ from datetime import datetime, timedelta
 # 현재 날짜 가져오기
 today = datetime.now()
 
+# 다음 토요일 날짜 계산
+days_until_saturday = (5 - today.weekday()) % 7  # 5는 토요일
+current_date = today + timedelta(days=days_until_saturday)
+
+# 회차 설정
+current_round = 1134  # 원하는 회차로 설정
+
 # CSS 스타일 정의
 st.markdown("""
 <style>
@@ -48,15 +55,6 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-
-# 회차 및 날짜 설정
-if today.weekday() == 6:  # 일요일
-    # 다음 회차 및 날짜 계산
-    current_round = 1134 + 1  # 다음 회차
-    current_date = today + timedelta(days=1)  # 다음날 (월요일)
-else:
-    current_round = 1134
-    current_date = today  # 현재 날짜 사용
 
 # 제목
 st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
@@ -120,10 +118,7 @@ if st.button(button_text):
 # 배너 추가
 st.markdown("""
 <div style='text-align: center; margin: 20px 0;'>
-    <script src="https://ads-partners.coupang.com/g.js"></script>
-    <script>
-        new PartnersCoupang.G({"id":803277,"template":"carousel","trackingCode":"AF1929818","width":"500","height":"100","tsource":""});
-    </script>
+    <a href="https://link.coupang.com/a/bPdnqr" target="_blank" referrerpolicy="unsafe-url"><img src="https://ads-partners.coupang.com/banners/803279?subId=&traceId=V0-301-879dd1202e5c73b2-I803279&w=728&h=90" alt=""></a>
 </div>
 """, unsafe_allow_html=True)
 
