@@ -119,24 +119,17 @@ if st.button(button_text):
     
 # 배너 추가
 st.markdown("""
-<div style='text-align: center;'>
+<div style='text-align: center; margin: 20px 0;'>
     <script src="https://ads-partners.coupang.com/g.js"></script>
     <script>
-        new PartnersCoupang.G({
-            "id":803207,
-            "template":"carousel",
-            "trackingCode":"AF1929818",
-            "width":"500",
-            "height":"100",
-            "tsource":""
-        });
+        new PartnersCoupang.G({"id":803277,"template":"carousel","trackingCode":"AF1929818","width":"500","height":"100","tsource":""});
     </script>
 </div>
 """, unsafe_allow_html=True)
 
 # iframe 배너 추가
 st.markdown("""
-<div style='text-align: center;'>
+<div style='text-align: center; margin: 20px 0;'>
     <iframe src="https://coupa.ng/cf3Jkx" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
 </div>
 """, unsafe_allow_html=True)
