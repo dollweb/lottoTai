@@ -130,7 +130,7 @@ if st.session_state.show_map:
     st.markdown("""
     <div style="text-align: center;">
         <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.123456789012!2d126.978388!3d37.566610!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b2c3d4e5f7%3A0x1234567890abcdef!2z7J207Iuc7J2A!5e0!3m2!1sko!2skr!4v1234567890123" 
+            src="https://map.naver.com" 
             width="100%" 
             height="450" 
             style="border:0; max-width: 900px;" 
