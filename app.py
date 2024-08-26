@@ -19,7 +19,7 @@ current_date = today + timedelta(days=days_until_saturday)
 
 # 세션 상태 초기화
 if 'show_lotto' not in st.session_state:
-    st.session_state.show_lotto = False
+    st.session_state.show_lotto = True  # 기본적으로 로또 화면 표시
 if 'show_map' not in st.session_state:
     st.session_state.show_map = False
 
@@ -74,18 +74,18 @@ st.markdown("""
 # 사이드바 기능 선택 버튼
 if st.sidebar.button("로또"):
     st.session_state.show_lotto = True
-    st.session_state.show_map = False  # 지도 버튼 클릭 시 지도 숨기기
+    st.session_state.show_map = False  # 로또 버튼 클릭 시 로또 화면 표시
 
 if st.sidebar.button("지도"):
     st.session_state.show_map = True
-    st.session_state.show_lotto = False  # 로또 버튼 클릭 시 로또 숨기기
+    st.session_state.show_lotto = False  # 지도 버튼 클릭 시 지도 화면 표시
 
 # 로또 기능
 if st.session_state.show_lotto:
-    # 제목
     st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
     st.markdown("<h6 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h6>", unsafe_allow_html=True)
     st.markdown(f"<h6 style='font-weight: bold;'>{current_round}회차({current_date.strftime('%Y.%m.%d')})</h6>", unsafe_allow_html=True)
+
     button_text = "로또번호 5세트 생성 버튼"
     if st.button(button_text):
         # 1부터 45까지의 숫자 생성
