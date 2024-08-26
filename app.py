@@ -11,7 +11,7 @@ round_duration = timedelta(weeks=1)  # 회차 간격 (1주)
 
 # 현재 날짜와 기준 날짜의 차이 계산
 weeks_difference = (today - start_date).days // 7
-current_round = 1134 + weeks_difference  # 1134회차부터 시작
+current_round = 1135 + weeks_difference  # 1134회차부터 시작
 
 # 다음 토요일 날짜 계산
 days_until_saturday = (5 - today.weekday()) % 7  # 5는 토요일
