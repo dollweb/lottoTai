@@ -11,11 +11,26 @@ round_duration = timedelta(weeks=1)  # 회차 간격 (1주)
 
 # 현재 날짜와 기준 날짜의 차이 계산
 weeks_difference = (today - start_date).days // 7
-current_round = 1134 + 1 # 1134회차부터 시작
+current_round = 1134 + weeks_difference  # 1134회차부터 시작
 
 # 다음 토요일 날짜 계산
 days_until_saturday = (5 - today.weekday()) % 7  # 5는 토요일
 current_date = today + timedelta(days=days_until_saturday)
+
+# 세션 상태 초기화
+if 'show_lotto' not in st.session_state:
+    st.session_state.show_lotto = False
+if 'show_map' not in st.session_state:
+    st.session_state.show_map = False
+
+# 사이드바 기능 선택 버튼
+if st.sidebar.button("로또"):
+    st.session_state.show_lotto = True
+    st.session_state.show_map = False  # 지도 버튼 클릭 시 지도 숨기기
+
+if st.sidebar.button("지도"):
+    st.session_state.show_map = True
+    st.session_state.show_lotto = False  # 로또 버튼 클릭 시 로또 숨기기
 
 # CSS 스타일 정의
 st.markdown("""
@@ -42,7 +57,7 @@ st.markdown("""
     background-color: #f0f0f0; /* 밝은 회색 배경색 */
     color: black; /* 글자색을 검정으로 변경 */
     border: none; /* 테두리 없음 */
-    padding: 15px 30px; /* 여백 */
+    padding: 5px 20px; /* 여백 */
     text-align: center; /* 텍스트 중앙 정렬 */
     text-decoration: none; /* 텍스트 장식 없음 */
     display: inline-block; /* 인라인 블록 요소 */
@@ -61,64 +76,67 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 제목
-st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
-st.markdown("<h6 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h6>", unsafe_allow_html=True)
-st.markdown(f"<h6 style='font-weight: bold;'>{current_round}회차({current_date.strftime('%Y.%m.%d')})</h6>", unsafe_allow_html=True)
-
-# 방문자 카운트 초기화
-if 'total_visits' not in st.session_state:
-    st.session_state.total_visits = 0
-if 'daily_visits' not in st.session_state:
-    st.session_state.daily_visits = 0
-
-# 방문자 수 카운트
-st.session_state.total_visits += 1
-st.session_state.daily_visits += 1
-
-# 방문자 수 표시
-st.sidebar.write(f"오늘 방문자 수: {st.session_state.daily_visits}")
-st.sidebar.write(f"전체 방문자 수: {st.session_state.total_visits}")
-
-# 버튼 클릭 시 동작
-button_text = "로또번호 5세트 생성 버튼"
-if st.button(button_text):
-    # 1부터 45까지의 숫자 생성
-    numbers = list(range(1, 46))
-    
-    # 5개의 랜덤 번호 세트 생성
-    all_numbers = []
-    for _ in range(5):
-        random_numbers = random.sample(numbers, 6)
-        sorted_numbers = sorted(random_numbers)
-        all_numbers.append(sorted_numbers)
-    
-    # 결과 출력
-    st.write("로또번호 정보만 제공하고, 투자의 책임은 본인에게 있습니다.")
-    number_sets_display = ""  # 모든 세트를 저장할 변수
-    
-    for idx, number_set in enumerate(all_numbers):
-        number_display = ""
-        for number in number_set:
-            # 색상 설정
-            if 1 <= number <= 10:
-                color_class = "dark-yellow"
-            elif 11 <= number <= 20:
-                color_class = "blue"
-            elif 21 <= number <= 30:
-                color_class = "red"
-            elif 31 <= number <= 40:
-                color_class = "gray"
-            else:
-                color_class = "green"
-            
-            number_display += f'<div class="circle {color_class}">{number}</div>'
+# 로또 기능
+if st.session_state.show_lotto:
+    # 버튼 클릭 시 동작
+    # 제목
+    st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
+    st.markdown("<h6 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h6>", unsafe_allow_html=True)
+    st.markdown(f"<h6 style='font-weight: bold;'>{current_round}회차({current_date.strftime('%Y.%m.%d')})</h6>", unsafe_allow_html=True)
+    button_text = "로또번호 5세트 생성 버튼"
+    if st.button(button_text):
+        # 1부터 45까지의 숫자 생성
+        numbers = list(range(1, 46))
         
-        # 각 세트를 한 줄에 표시
-        number_sets_display += f"<div style='display: inline-block; margin-right: 10px;'>{idx + 1}세트: {number_display}</div>"
+        # 5개의 랜덤 번호 세트 생성
+        all_numbers = []
+        for _ in range(5):
+            random_numbers = random.sample(numbers, 6)
+            sorted_numbers = sorted(random_numbers)
+            all_numbers.append(sorted_numbers)
+        
+        # 결과 출력
+        st.write("로또번호 정보만 제공하고, 투자의 책임은 본인에게 있습니다.")
+        number_sets_display = ""  # 모든 세트를 저장할 변수
+        
+        for idx, number_set in enumerate(all_numbers):
+            number_display = ""
+            for number in number_set:
+                # 색상 설정
+                if 1 <= number <= 10:
+                    color_class = "dark-yellow"
+                elif 11 <= number <= 20:
+                    color_class = "blue"
+                elif 21 <= number <= 30:
+                    color_class = "red"
+                elif 31 <= number <= 40:
+                    color_class = "gray"
+                else:
+                    color_class = "green"
+                
+                number_display += f'<div class="circle {color_class}">{number}</div>'
+            
+            # 각 세트를 한 줄에 표시
+            number_sets_display += f"<div style='display: inline-block; margin-right: 10px;'>{idx + 1}세트: {number_display}</div>"
 
-    # 모든 세트를 한 번에 출력
-    st.markdown(number_sets_display, unsafe_allow_html=True)
+        # 모든 세트를 한 번에 출력
+        st.markdown(number_sets_display, unsafe_allow_html=True)
+
+# 지도 기능
+if st.session_state.show_map:
+    st.markdown("""
+    <div style="text-align: center;">
+        <h3>지도 검색</h3>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.123456789012!2d126.978388!3d37.566610!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b2c3d4e5f7%3A0x1234567890abcdef!2z7J207Iuc7J2A!5e0!3m2!1sko!2skr!4v1234567890123" 
+            width="600" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+        </iframe>
+    </div>
+    """, unsafe_allow_html=True)
     
 # 배너 추가
 st.markdown("""
