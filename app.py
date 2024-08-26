@@ -23,6 +23,54 @@ if 'show_lotto' not in st.session_state:
 if 'show_map' not in st.session_state:
     st.session_state.show_map = False
 
+# CSS 스타일 정의
+st.markdown("""
+<style>
+    /* 사이드바 폭 조정 */
+    .stSidebar {
+        width: 30px;  /* 원하는 폭으로 조정 */
+    }
+    .circle {
+        display: inline-block;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 15px;
+        margin: 5px;
+        color: white;
+    }
+    .dark-yellow { background-color: #FFD700; }
+    .blue { background-color: blue; }
+    .red { background-color: red; }
+    .gray { background-color: gray; }
+    .green { background-color: green; }
+
+    /* 버튼 스타일 */
+    .stButton > button {
+        background-color: #f0f0f0; /* 밝은 회색 배경색 */
+        color: black; /* 글자색을 검정으로 변경 */
+        border: none; /* 테두리 없음 */
+        padding: 5px 20px; /* 여백 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        text-decoration: none; /* 텍스트 장식 없음 */
+        display: inline-block; /* 인라인 블록 요소 */
+        font-size: 15px; /* 글자 크기 */
+        margin: 4px 2px; /* 마진 */
+        cursor: pointer; /* 커서 모양 */
+        border-radius: 8px; /* 모서리 둥글기 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 그림자 효과 */
+        transition: background-color 0.3s, transform 0.2s; /* 효과 전환 */
+    }
+
+    .stButton > button:hover {
+        background-color: #e0e0e0; /* 호버 시 밝은 회색으로 변화 */
+        transform: translateY(-2px); /* 위로 이동 효과 */
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # 사이드바 기능 선택 버튼
 if st.sidebar.button("로또"):
     st.session_state.show_lotto = True
@@ -32,53 +80,8 @@ if st.sidebar.button("지도"):
     st.session_state.show_map = True
     st.session_state.show_lotto = False  # 로또 버튼 클릭 시 로또 숨기기
 
-# CSS 스타일 정의
-st.markdown("""
-<style>
-.circle {
-    display: inline-block;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: 15px;
-    margin: 5px;
-    color: white;
-}
-.dark-yellow { background-color: #FFD700; }
-.blue { background-color: blue; }
-.red { background-color: red; }
-.gray { background-color: gray; }
-.green { background-color: green; }
-
-/* 버튼 스타일 */
-.stButton > button {
-    background-color: #f0f0f0; /* 밝은 회색 배경색 */
-    color: black; /* 글자색을 검정으로 변경 */
-    border: none; /* 테두리 없음 */
-    padding: 5px 20px; /* 여백 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    text-decoration: none; /* 텍스트 장식 없음 */
-    display: inline-block; /* 인라인 블록 요소 */
-    font-size: 15px; /* 글자 크기 */
-    margin: 4px 2px; /* 마진 */
-    cursor: pointer; /* 커서 모양 */
-    border-radius: 8px; /* 모서리 둥글기 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 그림자 효과 */
-    transition: background-color 0.3s, transform 0.2s; /* 효과 전환 */
-}
-
-.stButton > button:hover {
-    background-color: #e0e0e0; /* 호버 시 밝은 회색으로 변화 */
-    transform: translateY(-2px); /* 위로 이동 효과 */
-}
-</style>
-""", unsafe_allow_html=True)
-
 # 로또 기능
 if st.session_state.show_lotto:
-    # 버튼 클릭 시 동작
     # 제목
     st.markdown("<h6 style='font-weight: bold;'>로또번호 인공지능 생성!! Lotto Tai_v0.1</h6>", unsafe_allow_html=True)
     st.markdown("<h6 style='font-size: 2.5em; font-weight: bold;'>로또 T아이</h6>", unsafe_allow_html=True)
@@ -137,7 +140,7 @@ if st.session_state.show_map:
         </iframe>
     </div>
     """, unsafe_allow_html=True)
-    
+
 # 배너 추가
 st.markdown("""
 <div style='text-align: center; margin: 20px 0;'>
