@@ -1,26 +1,27 @@
 import streamlit as st
-import requests
+from openai import OpenAI
 
-# Rasa API 엔드포인트
-RASA_API_URL = "http://localhost:8504/webhooks/rest/webhook"
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role":"assistant","content":"무엇을 알려드릴까요?"}]
 
-st.title("Rasa 챗봇")
+for m in st.session_state.messages:
+    with st.chat_message(m["role"]):
+        st.write(m["content"])
 
-# 사용자 입력 받기
-user_input = st.text_input("당신의 질문을 입력하세요:")
+if prompt := st.chat_input("질문을 입력하세요"):
+    st.session_state.messages.append({"role":"user","content":prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-if st.button("전송"):
-    if user_input:
-        # Rasa에 메시지 전송
-        response = requests.post(RASA_API_URL, json={"sender": "user", "message": user_input})
-        
-        # 응답 처리
-        if response.status_code == 200:
-            bot_responses = response.json()
-            for message in bot_responses:
-                if 'text' in message:
-                    st.write(f"챗봇: {message['text']}")
-                else:
-                    st.write("챗봇: 응답 메시지가 없습니다.")
-        else:
-            st.error("Rasa 챗봇에 접근할 수 없습니다.")
+    client = OpenAI(api_key="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")
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    response = completion.to_dict()["choices"][0]["message"]["content"]
+    st.session_state.messages.append({"role":"assistant","content":response})
+    with st.chat_message("assistant"):
+        st.markdown(response)
