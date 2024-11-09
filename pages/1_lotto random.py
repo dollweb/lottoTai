@@ -24,6 +24,10 @@ if 'show_lotto' not in st.session_state:
 # CSS 스타일 정의
 st.markdown("""
 <style>
+    /* 사이드바 폭 조정 */
+    .stSidebar {
+        width: 30px;  /* 원하는 폭으로 조정 */
+    }
     .circle {
         display: inline-block;
         border-radius: 50%;
@@ -40,6 +44,28 @@ st.markdown("""
     .red { background-color: red; }
     .gray { background-color: gray; }
     .green { background-color: green; }
+
+    /* 버튼 스타일 */
+    .stButton > button {
+        background-color: #f0f0f0; /* 밝은 회색 배경색 */
+        color: black; /* 글자색을 검정으로 변경 */
+        border: none; /* 테두리 없음 */
+        padding: 5px 20px; /* 여백 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        text-decoration: none; /* 텍스트 장식 없음 */
+        display: inline-block; /* 인라인 블록 요소 */
+        font-size: 15px; /* 글자 크기 */
+        margin: 4px 2px; /* 마진 */
+        cursor: pointer; /* 커서 모양 */
+        border-radius: 8px; /* 모서리 둥글기 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 그림자 효과 */
+        transition: background-color 0.3s, transform 0.2s; /* 효과 전환 */
+    }
+
+    .stButton > button:hover {
+        background-color: #e0e0e0; /* 호버 시 밝은 회색으로 변화 */
+        transform: translateY(-2px); /* 위로 이동 효과 */
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -87,13 +113,6 @@ if st.session_state.show_lotto:
 
         # 모든 세트를 한 번에 출력
         st.markdown(number_sets_display, unsafe_allow_html=True)
-
-# 배너 추가
-st.markdown("""
-<div style='text-align: center; margin: 20px 0;'>
-    <a href="https://link.coupang.com/a/bPdnqr" target="_blank" referrerpolicy="unsafe-url"><img src="https://ads-partners.coupang.com/banners/803279?subId=&traceId=V0-301-879dd1202e5c73b2-I803279&w=728&h=90" alt=""></a>
-</div>
-""", unsafe_allow_html=True)
 
 # iframe 배너 추가
 st.markdown("""
