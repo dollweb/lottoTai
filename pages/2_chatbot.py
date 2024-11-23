@@ -15,7 +15,7 @@ for m in st.session_state.messages:
         st.write(m["content"])
 
 # 사용자 입력 처리
-user_input = st.text_input("당신의 질문을 입력하세요:")
+user_input = st.text_input("당신의 질문을 입력하세요:", key="user_input")
 
 if user_input:
     # 사용자 메시지 추가
@@ -35,3 +35,6 @@ if user_input:
     for m in st.session_state.messages:
         with st.chat_message(m["role"]):
             st.write(m["content"])
+
+# 사용자 입력 필드를 화면 하단에 배치
+st.text_input("당신의 질문을 입력하세요:", key="user_input")
