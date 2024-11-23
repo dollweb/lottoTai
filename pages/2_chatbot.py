@@ -15,12 +15,23 @@ for m in st.session_state.messages:
         st.write(m["content"])
 
 # 사용자 입력 처리
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",  # 또는 사용하고자 하는 모델 이름
-    messages=[
-        {"role": "user", "content": "안녕하세요!"},
-    ]
-)
+user_input = st.text_input("당신의 질문을 입력하세요:")
 
-# 응답 출력
-st.write(response.choices[0].message['content'])
+if user_input:
+    # 사용자 메시지 추가
+    st.session_state.messages.append({"role": "user", "content": user_input})
+
+    # OpenAI API 호출
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # 또는 사용하고자 하는 모델 이름
+        messages=st.session_state.messages  # 전체 대화 내용 전달
+    )
+
+    # 응답 추가
+    assistant_message = response.choices[0].message['content']
+    st.session_state.messages.append({"role": "assistant", "content": assistant_message})
+
+    # 대화 내용 출력
+    for m in st.session_state.messages:
+        with st.chat_message(m["role"]):
+            st.write(m["content"])
