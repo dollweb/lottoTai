@@ -23,10 +23,10 @@ if user_input:
 
     # OpenAI API 호출
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # 또는 사용하고자 하는 모델 이름
-        messages=st.session_state.messages  # 전체 대화 내용 전달
+        model="gpt-3.5-turbo",
+        messages=st.session_state.messages  # 전체 대화 내용을 전달
     )
-
+    
     # 응답 추가
     assistant_message = response.choices[0].message['content']
     st.session_state.messages.append({"role": "assistant", "content": assistant_message})
@@ -35,6 +35,3 @@ if user_input:
     for m in st.session_state.messages:
         with st.chat_message(m["role"]):
             st.write(m["content"])
-
-# 사용자 입력 필드를 화면 하단에 배치
-st.text_input("당신의 질문을 입력하세요:", key="user_input")
