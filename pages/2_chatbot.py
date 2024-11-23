@@ -1,6 +1,6 @@
 import streamlit as st
 import openai
-from openai import OpenAI
+import asyncio
 
 st.title("lottoTai")
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -22,13 +22,17 @@ if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     # OpenAI API 호출
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=st.session_state.messages  # 전체 대화 내용을 전달
-    )
+    async def get_response():
+        response = await openai.ChatCompletion.acreate(
+            model="gpt-3.5-turbo",
+            messages=st.session_state.messages
+        )
+        return response.choices[0].message['content']
+
+    # 비동기 함수 실행
+    assistant_message = asyncio.run(get_response())
     
     # 응답 추가
-    assistant_message = response.choices[0].message['content']
     st.session_state.messages.append({"role": "assistant", "content": assistant_message})
 
     # 대화 내용 출력
