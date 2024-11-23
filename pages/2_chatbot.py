@@ -30,8 +30,8 @@ if user_input:
         return response.choices[0].message['content']
 
     # 비동기 함수 실행
-    assistant_message = asyncio.run(get_response())
-    
+    assistant_message = st.experimental_async(get_response)
+
     # 응답 추가
     st.session_state.messages.append({"role": "assistant", "content": assistant_message})
 
