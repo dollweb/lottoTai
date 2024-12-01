@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 
 # Streamlit 앱 제목
-st.title("lottoTai")
+st.title("lottoTai Chatbot")
 openai.api_key = st.secrets["general"]["OPENAI_API_KEY"]
 
 # 세션 상태 초기화
