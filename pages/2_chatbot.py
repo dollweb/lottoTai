@@ -27,7 +27,7 @@ if prompt := st.chat_input("질문을 입력하세요"):
             messages=st.session_state.messages
         )
 
-        response = completion.choices[0].message['content']
+        response = completion['choices'][0]['message']['content']
         st.session_state.messages.append({"role": "assistant", "content": response})
         with st.chat_message("assistant"):
             st.markdown(response)
