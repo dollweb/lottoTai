@@ -3,7 +3,7 @@ import openai
 import asyncio
 
 st.title("lottoTai")
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["general"]["OPENAI_API_KEY"]  # 비밀 키를 안전하게 사용
 
 # 세션 상태 초기화
 if "messages" not in st.session_state:
@@ -30,7 +30,7 @@ if user_input:
         return response.choices[0].message['content']
 
     # 비동기 함수 실행
-    assistant_message = st.experimental_async(get_response)
+    assistant_message = asyncio.run(get_response())
 
     # 응답 추가
     st.session_state.messages.append({"role": "assistant", "content": assistant_message})
