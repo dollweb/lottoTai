@@ -2,53 +2,77 @@ import streamlit as st
 import random
 
 # --- 1. 게임 초기화 및 상태 관리 ---
-# st.session_state를 사용해서 게임 상태를 저장해요.
-# Streamlit 앱은 사용자 인터랙션이 발생할 때마다 코드를 처음부터 다시 실행하기 때문에,
-# 게임의 진행 상황(예: 정답 숫자, 시도 횟수, 메시지)을 저장하기 위해 필요합니다.
+def initialize_tic_tac_toe():
+    st.session_state.board = [" " for _ in range(9)] # 3x3 보드, 1차원 리스트로 관리
+    st.session_state.current_player = "X" # 첫 턴은 항상 X
+    st.session_state.game_over = False
+    st.session_state.winner = None # 승자 ('X', 'O', 'Draw')
+    st.session_state.game_message = "X의 차례입니다!"
 
-def initialize_game():
-    st.session_state.secret_number = random.randint(1, 100) # 1부터 100 사이의 비밀 숫자 생성
-    st.session_state.attempts = 0 # 시도 횟수 초기화
-    st.session_state.game_message = "1에서 100 사이의 숫자를 맞춰보세요!" # 초기 메시지
-    st.session_state.game_over = False # 게임 종료 여부
+if 'board' not in st.session_state:
+    initialize_tic_tac_toe()
 
-# 게임이 처음 실행될 때 또는 '새 게임' 버튼을 눌렀을 때 초기화
-if 'secret_number' not in st.session_state:
-    initialize_game()
+# --- 2. 게임 로직 함수 ---
+def check_winner(board):
+    win_conditions = [
+        # 가로
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        # 세로
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        # 대각선
+        [0, 4, 8], [2, 4, 6]
+    ]
+    for cond in win_conditions:
+        if board[cond[0]] == board[cond[1]] == board[cond[2]] and board[cond[0]] != " ":
+            return board[cond[0]] # 승자 반환
+    if " " not in board:
+        return "Draw" # 무승부
+    return None # 아직 승자 없음
 
-# --- 2. 게임 화면 구성 ---
-st.title("🎯 숫자 맞추기 게임")
+def handle_click(index):
+    if st.session_state.board[index] == " " and not st.session_state.game_over:
+        # 플레이어 턴
+        st.session_state.board[index] = st.session_state.current_player
+        winner = check_winner(st.session_state.board)
 
-st.write(st.session_state.game_message) # 현재 게임 메시지 표시
-st.write(f"현재 시도 횟수: {st.session_state.attempts}회") # 시도 횟수 표시
-
-# 게임이 끝나지 않았을 때만 입력 필드와 버튼을 보여줍니다.
-if not st.session_state.game_over:
-    # 사용자 입력 받기
-    guess = st.number_input("당신의 숫자는?", min_value=1, max_value=100, step=1, key="guess_input")
-
-    # '확인' 버튼
-    if st.button("확인"):
-        # 입력된 값이 있고, 게임이 아직 끝나지 않았다면
-        if guess is not None:
-            st.session_state.attempts += 1 # 시도 횟수 증가
-
-            if guess < st.session_state.secret_number:
-                st.session_state.game_message = "더 높은 숫자를 맞춰보세요!"
-            elif guess > st.session_state.secret_number:
-                st.session_state.game_message = "더 낮은 숫자를 맞춰보세요!"
+        if winner:
+            st.session_state.winner = winner
+            st.session_state.game_over = True
+            if winner == "Draw":
+                st.session_state.game_message = "무승부입니다!"
             else:
-                st.session_state.game_message = f"정답입니다! {st.session_state.attempts}회 만에 맞추셨어요!"
-                st.session_state.game_over = True # 게임 종료
+                st.session_state.game_message = f"🎉 {winner} 승리! 🎉"
+        else:
+            st.session_state.current_player = "O" if st.session_state.current_player == "X" else "X"
+            st.session_state.game_message = f"{st.session_state.current_player}의 차례입니다!"
 
-            # 메시지를 업데이트했으니 화면을 다시 그리기 위해 한 번 더 갱신합니다.
-            st.rerun()
+        st.rerun() # 상태 업데이트 후 화면 즉시 새로고침
 
-# 게임이 끝났을 때 '새 게임' 버튼을 보여줍니다.
+def reset_tic_tac_toe_game():
+    initialize_tic_tac_toe()
+    st.rerun()
+
+# --- 3. 게임 화면 구성 ---
+st.title("⭕❌ O-X 게임")
+st.header(st.session_state.game_message)
+
+# 3x3 보드 그리기
+for i in range(3):
+    cols = st.columns(3)
+    for j in range(3):
+        idx = i * 3 + j
+        with cols[j]:
+            # 버튼 텍스트는 보드 상태에 따라 다르게 표시
+            # 게임이 끝났거나 이미 채워진 칸은 비활성화
+            if st.button(
+                st.session_state.board[idx],
+                key=f"cell_{idx}",
+                use_container_width=True,
+                disabled=st.session_state.board[idx] != " " or st.session_state.game_over
+            ):
+                handle_click(idx)
+
+st.markdown("---")
 if st.session_state.game_over:
     if st.button("새 게임 시작"):
-        initialize_game() # 게임 초기화
-        st.rerun() # 화면을 다시 그려 새 게임 시작
-
-# --- 3. 힌트 (디버깅용, 실제 게임에서는 숨기거나 삭제) ---
-# st.sidebar.write(f"힌트: 비밀 숫자 = {st.session_state.secret_number}")
+        reset_tic_tac_toe_game()
