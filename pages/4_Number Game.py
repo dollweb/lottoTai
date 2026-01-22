@@ -52,3 +52,12 @@ if st.session_state.game_over:
 
 # --- 3. 힌트 (디버깅용, 실제 게임에서는 숨기거나 삭제) ---
 # st.sidebar.write(f"힌트: 비밀 숫자 = {st.session_state.secret_number}")
+# 배너 추가
+st.markdown("""
+<div style='text-align: center; margin: 20px 0;'>
+    <a href="https://link.coupang.com/a/bPdnqr" target="_blank" referrerpolicy="unsafe-url"><img src="https://ads-partners.coupang.com/banners/803279?subId=&traceId=V0-301-879dd1202e5c73b2-I803279&w=728&h=90" alt=""></a>
+</div>
+""", unsafe_allow_html=True)
+
+# 쿠팡 파트너스 안내 문구 추가
+st.markdown("<p style='text-align: center; font-size: 0.8em;'>※ 쿠팡 파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있습니다.</p>", unsafe_allow_html=True)
