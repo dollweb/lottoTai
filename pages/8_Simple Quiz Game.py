@@ -151,8 +151,8 @@ if "quiz_completed" not in st.session_state:
     st.session_state.quiz_completed = False
 
 # --- 4. UI 구성 ---
-st.set_page_config(page_title="상식 퀴즈 게임", layout="centered")
-st.title("🎯 상식 퀴즈 게임")
+st.set_page_config(page_title="상식 퀴즈", layout="centered")
+st.title("🎯 상식 퀴즈")
 
 # 게임 완료 화면
 if st.session_state.quiz_completed:
@@ -237,3 +237,4 @@ st.markdown("""
 
 # 쿠팡 파트너스 안내 문구 추가
 st.markdown("<p style='text-align: center; font-size: 0.8em;'>※ 쿠팡 파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있습니다.</p>", unsafe_allow_html=True)
+
