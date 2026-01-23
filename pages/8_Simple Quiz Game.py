@@ -1,158 +1,178 @@
 import streamlit as st
+import random
 
-# --- 1. 퀴즈 데이터 ---
 QUIZ_QUESTIONS = [
-    {"question": "대한민국의 수도는?", "options": ["부산", "대구", "서울", "인천"], "answer": "서울"},
-    {"question": "세계에서 가장 높은 산은?", "options": ["에베레스트", "K2", "킬리만자로", "후지산"], "answer": "에베레스트"},
-    {"question": "프랑스의 수도는?", "options": ["파리", "마르세유", "리옹", "니스"], "answer": "파리"},
-    {"question": "인류 역사에서 가장 오래된 문명은?", "options": ["이집트 문명", "메소포타미아 문명", "인더스 문명", "황하 문명"], "answer": "메소포타미아 문명"},
-    {"question": "2024년 파리 올림픽 개최 국가는?", "options": ["일본", "프랑스", "중국", "미국"], "answer": "프랑스"},
+    {"question": "대한민국의 수도는?", "options": ["부산", "대구", "서울", "대전"], "answer": "서울"},
+    {"question": "2 + 2 = ?", "options": ["2", "3", "4", "5"], "answer": "4"},
+    {"question": "개의 울음소리는?", "options": ["야옹", "멍멍", "꽥꽥", "짹짹"], "answer": "멍멍"},
+    {"question": "1주일은 며칠인가?", "options": ["5일", "6일", "7일", "8일"], "answer": "7일"},
+    {"question": "1년은 몇 개월인가?", "options": ["10개월", "11개월", "12개월", "13개월"], "answer": "12개월"},
+    {"question": "신호등의 색깔은?", "options": ["1가지", "2가지", "3가지", "4가지"], "answer": "3가지"},
+    {"question": "신호등의 파란색은 무엇을 의미하나?", "options": ["정지", "주의", "통행가능", "좌회전"], "answer": "통행가능"},
+    {"question": "신호등의 빨간색은 무엇을 의미하나?", "options": ["통행가능", "주의", "정지", "좌회전"], "answer": "정지"},
+    {"question": "신호등의 노란색은 무엇을 의미하나?", "options": ["통행가능", "주의", "정지", "좌회전"], "answer": "주의"},
+    {"question": "고양이의 울음소리는?", "options": ["멍멍", "야옹", "꽥꽥", "짹짹"], "answer": "야옹"},
+    {"question": "오리의 울음소리는?", "options": ["멍멍", "야옹", "꽥꽥", "짹짹"], "answer": "꽥꽥"},
+    {"question": "새의 울음소리는?", "options": ["멍멍", "야옹", "꽥꽥", "짹짹"], "answer": "짹짹"},
+    {"question": "무지개의 색 개수는?", "options": ["5가지", "6가지", "7가지", "8가지"], "answer": "7가지"},
+    {"question": "무지개의 첫 번째 색은?", "options": ["주황색", "노란색", "빨간색", "파란색"], "answer": "빨간색"},
+    {"question": "월요일 다음은?", "options": ["일요일", "화요일", "수요일", "목요일"], "answer": "화요일"},
+    {"question": "1월 다음은?", "options": ["3월", "2월", "11월", "12월"], "answer": "2월"},
+    {"question": "계절은 몇 가지인가?", "options": ["2가지", "3가지", "4가지", "5가지"], "answer": "4가지"},
+    {"question": "봄 다음 계절은?", "options": ["겨울", "여름", "가을", "초여름"], "answer": "여름"},
+    {"question": "손가락은 몇 개인가?", "options": ["8개", "9개", "10개", "12개"], "answer": "10개"},
+    {"question": "발가락은 몇 개인가?", "options": ["8개", "9개", "10개", "12개"], "answer": "10개"},
+    {"question": "얼굴에 눈은 몇 개인가?", "options": ["1개", "2개", "3개", "4개"], "answer": "2개"},
+    {"question": "얼굴에 귀는 몇 개인가?", "options": ["1개", "2개", "3개", "4개"], "answer": "2개"},
+    {"question": "얼굴에 코는 몇 개인가?", "options": ["1개", "2개", "3개", "4개"], "answer": "1개"},
+    {"question": "얼굴에 입은 몇 개인가?", "options": ["1개", "2개", "3개", "4개"], "answer": "1개"},
+    {"question": "치아는 대략 몇 개인가?", "options": ["20개", "28개", "32개", "40개"], "answer": "32개"},
+    {"question": "우유는 어디서 나오나?", "options": ["닭", "돼지", "소", "양"], "answer": "소"},
+    {"question": "계란은 누가 낳나?", "options": ["소", "돼지", "닭", "오리"], "answer": "닭"},
+    {"question": "바나나의 색깔은?", "options": ["빨간색", "초록색", "노란색", "주황색"], "answer": "노란색"},
+    {"question": "당근의 색깔은?", "options": ["빨간색", "초록색", "노란색", "주황색"], "answer": "주황색"},
+    {"question": "상추의 색깔은?", "options": ["빨간색", "초록색", "노란색", "주황색"], "answer": "초록색"},
+    {"question": "포도주의 색깔은?", "options": ["투명", "빨간색", "흰색", "분홍색"], "answer": "빨간색"},
+    {"question": "우유의 색깔은?", "options": ["투명", "빨간색", "흰색", "노란색"], "answer": "흰색"},
+    {"question": "피는 어떤 색인가?", "options": ["파란색", "빨간색", "검은색", "흰색"], "answer": "빨간색"},
+    {"question": "숲의 색깔은?", "options": ["파란색", "노란색", "초록색", "검은색"], "answer": "초록색"},
+    {"question": "하늘의 색깔은?", "options": ["초록색", "노란색", "파란색", "검은색"], "answer": "파란색"},
+    {"question": "밤하늘의 색깔은?", "options": ["파란색", "노란색", "빨간색", "검은색"], "answer": "검은색"},
+    {"question": "눈의 색깔은?", "options": ["빨간색", "흰색", "검은색", "주황색"], "answer": "흰색"},
+    {"question": "불의 색깔은?", "options": ["파란색", "초록색", "빨간색", "흰색"], "answer": "빨간색"},
+    {"question": "나뭇잎의 색깔은?", "options": ["노란색", "파란색", "초록색", "검은색"], "answer": "초록색"},
+    {"question": "해는 어디서 뜨나?", "options": ["서쪽", "동쪽", "남쪽", "북쪽"], "answer": "동쪽"},
+    {"question": "해는 어디로 질까?", "options": ["동쪽", "서쪽", "남쪽", "북쪽"], "answer": "서쪽"},
+    {"question": "달은 언제 뜨나?", "options": ["아침", "낮", "저녁과 밤", "항상"], "answer": "저녁과 밤"},
+    {"question": "별은 언제 보이나?", "options": ["아침", "낮", "저녁과 밤", "항상"], "answer": "저녁과 밤"},
+    {"question": "물은 몇 도에서 끓나?", "options": ["50도", "75도", "100도", "150도"], "answer": "100도"},
+    {"question": "물은 몇 도에서 언나?", "options": ["0도", "10도", "25도", "50도"], "answer": "0도"},
+    {"question": "인간의 정상 체온은?", "options": ["35도", "36.5도", "37도", "38도"], "answer": "37도"},
+    {"question": "산의 뜻은?", "options": ["평지", "높은 언덕", "골짜기", "들판"], "answer": "높은 언덕"},
+    {"question": "바다의 반대는?", "options": ["산", "땅", "호수", "강"], "answer": "땅"},
+    {"question": "강물이 흐르는 방향은?", "options": ["산 위로", "산 아래로", "바다로", "하늘로"], "answer": "바다로"},
+    {"question": "세계에서 가장 긴 강은?", "options": ["아마존강", "황허강", "나일강", "양쯔강"], "answer": "나일강"},
+    {"question": "세계에서 가장 높은 산은?", "options": ["에베레스트산", "K2", "칸첸중가", "로라이마산"], "answer": "에베레스트산"},
+    {"question": "세계에서 가장 큰 사막은?", "options": ["칼라하리", "고비", "아라비아", "사하라"], "answer": "사하라"},
+    {"question": "세계에서 가장 큰 섬은?", "options": ["스리랑카", "자바", "그린란드", "보르네오"], "answer": "그린란드"},
+    {"question": "세계에서 가장 큰 호수는?", "options": ["카스피해", "바이칼호", "탕가니카호", "빅토리아호"], "answer": "카스피해"},
+    {"question": "세계에서 가장 큰 나라는?", "options": ["캐나다", "중국", "미국", "러시아"], "answer": "러시아"},
+    {"question": "세계에서 가장 인구가 많은 나라는?", "options": ["중국", "미국", "인도", "인도네시아"], "answer": "인도"},
+    {"question": "세계에서 가장 작은 나라는?", "options": ["모나코", "산마리노", "바티칸", "룩셈부르크"], "answer": "바티칸"},
+    {"question": "영국의 수도는?", "options": ["맨체스터", "런던", "리버풀", "버밍엄"], "answer": "런던"},
+    {"question": "프랑스의 수도는?", "options": ["마르세유", "리옹", "파리", "니스"], "answer": "파리"},
+    {"question": "이탈리아의 수도는?", "options": ["밀라노", "로마", "베네치아", "나폴리"], "answer": "로마"},
+    {"question": "스페인의 수도는?", "options": ["바르셀로나", "마드리드", "발렌시아", "세비야"], "answer": "마드리드"},
+    {"question": "독일의 수도는?", "options": ["뮌헨", "베를린", "함부르크", "쾰른"], "answer": "베를린"},
+    {"question": "중국의 수도는?", "options": ["상하이", "베이징", "광저우", "충칭"], "answer": "베이징"},
     {"question": "일본의 수도는?", "options": ["오사카", "교토", "도쿄", "나고야"], "answer": "도쿄"},
-    {"question": "중국의 만리장성은 몇 세기에 지어졌나?", "options": ["2세기", "5세기", "7세기", "10세기"], "answer": "7세기"},
+    {"question": "태국의 수도는?", "options": ["치앙마이", "방콕", "푸켓", "파타야"], "answer": "방콕"},
     {"question": "이집트의 수도는?", "options": ["기자", "룩소르", "카이로", "알렉산드리아"], "answer": "카이로"},
-    {"question": "인도의 타지마할은 어느 시대에 건설되었나?", "options": ["15세기", "16세기", "17세기", "18세기"], "answer": "17세기"},
     {"question": "그리스의 수도는?", "options": ["아테네", "스파르타", "테살로니키", "파트라스"], "answer": "아테네"},
-    {"question": "태양계에서 가장 큰 행성은?", "options": ["토성", "목성", "천왕성", "해왕성"], "answer": "목성"},
-    {"question": "지구가 태양 주위를 공전하는 데 걸리는 시간은?", "options": ["360일", "365일", "370일", "375일"], "answer": "365일"},
-    {"question": "인간의 뼈는 몇 개인가?", "options": ["186개", "206개", "226개", "246개"], "answer": "206개"},
-    {"question": "혈액형 중 가장 흔한 형은?", "options": ["A형", "B형", "O형", "AB형"], "answer": "O형"},
-    {"question": "인간의 DNA는 몇 개의 염색체로 이루어져 있나?", "options": ["23개", "44개", "46개", "48개"], "answer": "46개"},
-    {"question": "세계에서 가장 큰 대양은?", "options": ["대서양", "인도양", "태평양", "북극해"], "answer": "태평양"},
-    {"question": "아마존 강이 흐르는 대륙은?", "options": ["아프리카", "아시아", "남미", "오스트레일리아"], "answer": "남미"},
-    {"question": "사하라 사막이 위치한 대륙은?", "options": ["아시아", "아프리카", "유럽", "남미"], "answer": "아프리카"},
-    {"question": "나일 강이 흐르는 나라는?", "options": ["수단", "우간다", "이집트", "에티오피아"], "answer": "이집트"},
-    {"question": "세계 인구가 가장 많은 나라는?", "options": ["인도", "중국", "미국", "인도네시아"], "answer": "인도"},
-    {"question": "셰익스피어의 가장 유명한 작품은?", "options": ["맥베스", "햄릿", "오델로", "로미오와 줄리엣"], "answer": "햄릿"},
-    {"question": "레오나르도 다빈치의 가장 유명한 그림은?", "options": ["별이 빛나는 밤", "모나리자", "밤의 카페 테라스", "절규"], "answer": "모나리자"},
-    {"question": "프로메테우스의 불을 훔친 그리스 신화의 인물은?", "options": ["헤라클레스", "프로메테우스", "제우스", "포세이돈"], "answer": "프로메테우스"},
-    {"question": "로미오와 줄리엣의 배경이 되는 도시는?", "options": ["피렌체", "베로나", "로마", "베니스"], "answer": "베로나"},
-    {"question": "돈키호테의 작가는?", "options": ["세르반테스", "조르주 상드", "빅토르 위고", "발자크"], "answer": "세르반테스"},
-    {"question": "한국 최초의 여성 노벨상 수상자는?", "options": ["이순신", "김영삼", "김대중", "이명박"], "answer": "김영삼"},
-    {"question": "세계에서 가장 오래된 대학은?", "options": ["옥스포드", "케임브리지", "볼로냐", "파리"], "answer": "볼로냐"},
-    {"question": "미국 독립선언서가 채택된 연도는?", "options": ["1775년", "1776년", "1777년", "1778년"], "answer": "1776년"},
-    {"question": "프랑스 혁명이 일어난 연도는?", "options": ["1787년", "1788년", "1789년", "1790년"], "answer": "1789년"},
-    {"question": "나폴레옹이 황제가 된 연도는?", "options": ["1801년", "1802년", "1803년", "1804년"], "answer": "1804년"},
-    {"question": "제1차 세계대전이 끝난 연도는?", "options": ["1916년", "1917년", "1918년", "1919년"], "answer": "1918년"},
-    {"question": "제2차 세계대전이 끝난 연도는?", "options": ["1943년", "1944년", "1945년", "1946년"], "answer": "1945년"},
-    {"question": "한국 전쟁이 발발한 연도는?", "options": ["1949년", "1950년", "1951년", "1952년"], "answer": "1950년"},
-    {"question": "베를린 장벽이 무너진 연도는?", "options": ["1987년", "1988년", "1989년", "1990년"], "answer": "1989년"},
-    {"question": "소비에트 연방이 붕괴된 연도는?", "options": ["1989년", "1990년", "1991년", "1992년"], "answer": "1991년"},
-    {"question": "FIFA 월드컵이 처음 개최된 연도는?", "options": ["1926년", "1928년", "1930년", "1932년"], "answer": "1930년"},
-    {"question": "올림픽 게임이 처음 개최된 연도는?", "options": ["1896년", "1898년", "1900년", "1902년"], "answer": "1896년"},
-    {"question": "테니스의 윔블던 선수권대회는 어느 나라에서 열리나?", "options": ["미국", "호주", "영국", "프랑스"], "answer": "영국"},
-    {"question": "골프의 마스터스 토너먼트는 어느 도시에서 열리나?", "options": ["로스앤젤레스", "오거스타", "뉴욕", "샌프란시스코"], "answer": "오거스타"},
-    {"question": "배구를 발명한 국가는?", "options": ["일본", "소비에트", "미국", "중국"], "answer": "미국"},
-    {"question": "탁구의 발상지는?", "options": ["중국", "일본", "한국", "영국"], "answer": "영국"},
-    {"question": "마라톤의 거리는 몇 km인가?", "options": ["40km", "41km", "42.195km", "45km"], "answer": "42.195km"},
-    {"question": "음악의 기본 음은 몇 개인가?", "options": ["6개", "7개", "8개", "9개"], "answer": "7개"},
-    {"question": "바이올린의 현은 몇 개인가?", "options": ["3개", "4개", "5개", "6개"], "answer": "4개"},
-    {"question": "피아노의 건반은 몇 개인가?", "options": ["76개", "80개", "88개", "92개"], "answer": "88개"},
-    {"question": "클래식 교향곡의 악장은 몇 개인가?", "options": ["2개", "3개", "4개", "5개"], "answer": "4개"},
-    {"question": "비틀즈의 멤버는 몇 명인가?", "options": ["3명", "4명", "5명", "6명"], "answer": "4명"},
-    {"question": "영화 '타이타닉'이 침몰한 연도는?", "options": ["1912년", "1913년", "1914년", "1915년"], "answer": "1912년"},
-    {"question": "영화 '지브라'는 누가 감독했나?", "options": ["스티븐 스필버그", "스탠리 큐브릭", "프란시스 포드 코폴라", "마틴 스콜세지"], "answer": "스탠리 큐브릭"},
-    {"question": "아카데미상(오스카상)은 매년 몇 월에 시상하나?", "options": ["1월", "2월", "3월", "4월"], "answer": "3월"},
-    {"question": "최고의 영화상을 받는 아카데미상 부문은?", "options": ["작품상", "감독상", "남우주연상", "여우주연상"], "answer": "작품상"},
-    {"question": "세계에서 가장 높은 건물은?", "options": ["에펠탑", "버즈칼리파", "크라이슬러빌딩", "타이페이 101"], "answer": "버즈칼리파"},
-    {"question": "정해진 시간에 물을 뿜는 간헐천 올드페이스풀은 어느 나라에 있나?", "options": ["캐나다", "미국", "아이슬란드", "뉴질랜드"], "answer": "미국"},
-    {"question": "빅벤은 어느 나라의 시계탑인가?", "options": ["프랑스", "독일", "영국", "스위스"], "answer": "영국"},
-    {"question": "자유의 여신상은 어느 도시에 있나?", "options": ["보스턴", "워싱턴DC", "뉴욕", "필라델피아"], "answer": "뉴욕"},
-    {"question": "콜로세움은 어느 도시에 있나?", "options": ["피렌체", "나폴리", "로마", "베니스"], "answer": "로마"},
-    {"question": "앙코르와트 사원은 어느 나라에 있나?", "options": ["태국", "라오스", "캄보디아", "베트남"], "answer": "캄보디아"},
-    {"question": "코알라가 주로 사는 국가는?", "options": ["뉴질랜드", "호주", "인도네시아", "파푸아뉴기니"], "answer": "호주"},
-    {"question": "펭귄이 가장 많이 사는 대륙은?", "options": ["남아메리카", "남극", "호주", "남아프리카"], "answer": "남극"},
-    {"question": "기린의 목에 있는 뼈는 몇 개인가?", "options": ["5개", "7개", "9개", "11개"], "answer": "7개"},
-    {"question": "박쥐는 어떻게 길을 찾나?", "options": ["후각", "초음파", "시각", "전기감지"], "answer": "초음파"},
-    {"question": "문어는 몇 개의 팔을 가지고 있나?", "options": ["6개", "7개", "8개", "9개"], "answer": "8개"},
-    {"question": "가장 빠른 육지 동물은?", "options": ["사자", "치타", "영양", "얼룩말"], "answer": "치타"},
-    {"question": "코끼리의 임신 기간은 몇 개월인가?", "options": ["9개월", "12개월", "18개월", "22개월"], "answer": "22개월"},
-    {"question": "카페인이 가장 많이 함유된 음료는?", "options": ["커피", "차", "초콜릿", "에너지음료"], "answer": "커피"},
-    {"question": "토마토는 식물학적으로 무엇인가?", "options": ["채소", "과일", "베리", "견과류"], "answer": "베리"},
-    {"question": "초콜릿의 원료가 되는 식물은?", "options": ["코코넛", "카카오", "커피", "바닐라"], "answer": "카카오"},
-    {"question": "꿀은 누가 만드나?", "options": ["나비", "매미", "벌", "파리"], "answer": "벌"},
-    {"question": "세계에서 가장 비싼 향신료는?", "options": ["사프란", "바닐라", "카르다몬", "정향"], "answer": "사프란"},
-    {"question": "치즈를 만드는 과정에서 사용되는 미생물은?", "options": ["효모", "박테리아", "효소", "곰팡이"], "answer": "박테리아"},
-    {"question": "한국의 전통 발효식품 김치의 주재료는?", "options": ["무", "배추", "고추", "마늘"], "answer": "배추"},
-    {"question": "이탈리아의 전통 음식 파스타는 무엇으로 만드나?", "options": ["쌀", "옥수수", "밀가루", "감자"], "answer": "밀가루"},
-    {"question": "일본의 국가 음식으로 불리는 것은?", "options": ["우동", "라면", "초밥", "튀김"], "answer": "초밥"},
-    {"question": "수프의 발상지는 어디인가?", "options": ["중국", "프랑스", "이탈리아", "스페인"], "answer": "프랑스"},
-    {"question": "비타민 C가 가장 풍부한 과일은?", "options": ["오렌지", "딸기", "키위", "파파야"], "answer": "키위"},
-    {"question": "인간의 뇌 무게는 평균 몇 kg인가?", "options": ["0.8kg", "1.0kg", "1.4kg", "1.8kg"], "answer": "1.4kg"},
-    {"question": "심장이 1분에 뛰는 횟수는?", "options": ["40회", "60회", "80회", "100회"], "answer": "80회"},
-    {"question": "인간의 폐가 한 번의 호흡으로 흡입하는 공기는?", "options": ["500ml", "1000ml", "1500ml", "2000ml"], "answer": "500ml"},
-    {"question": "일반적인 체온은 몇 도인가?", "options": ["35도", "36.5도", "37.5도", "38도"], "answer": "36.5도"},
-    {"question": "혈압 측정 시 수축기 혈압의 정상 범위는?", "options": ["100-110mmHg", "110-120mmHg", "120-130mmHg", "130-140mmHg"], "answer": "120-130mmHg"},
-    {"question": "시력을 나타내는 정상 시력은?", "options": ["0.8", "1.0", "1.2", "1.5"], "answer": "1.0"},
-    {"question": "인간의 손가락과 발가락의 총 개수는?", "options": ["18개", "20개", "22개", "24개"], "answer": "20개"},
-    {"question": "혀에 있는 미각 세포를 무엇이라 하나?", "options": ["유두", "맛봉오리", "미뢰", "미각기"], "answer": "미뢰"},
-    {"question": "스트레스 호르몬으로 알려진 것은?", "options": ["인슐린", "코르티솔", "멜라토닌", "세로토닌"], "answer": "코르티솔"},
-    {"question": "가장 큰 장기는?", "options": ["뇌", "심장", "간", "폐"], "answer": "간"},
-    {"question": "소화 과정에서 음식물이 가장 먼저 도달하는 장기는?", "options": ["식도", "위", "십이지장", "소장"], "answer": "위"},
+    {"question": "러시아의 수도는?", "options": ["상트페테르부르크", "모스크바", "노보시비르스크", "예카테린부르크"], "answer": "모스크바"},
+    {"question": "캐나다의 수도는?", "options": ["토론토", "밴쿠버", "오타와", "몬트리올"], "answer": "오타와"},
+    {"question": "호주의 수도는?", "options": ["시드니", "멜버른", "캔버라", "브리즈번"], "answer": "캔버라"},
+    {"question": "뉴질랜드의 수도는?", "options": ["오클랜드", "웰링턴", "크라이스트처치", "더니든"], "answer": "웰링턴"},
+    {"question": "인도의 수도는?", "options": ["뭄바이", "콜카타", "델리", "벵갈루루"], "answer": "델리"},
+    {"question": "브라질의 수도는?", "options": ["상파울루", "리우데자네이루", "브라질리아", "살바도르"], "answer": "브라질리아"},
+    {"question": "멕시코의 수도는?", "options": ["칸쿤", "몬테레이", "멕시코시티", "푸에르토바야르타"], "answer": "멕시코시티"},
+    {"question": "아르헨티나의 수도는?", "options": ["코르도바", "부에노스아이레스", "로사리오", "라플라타"], "answer": "부에노스아이레스"},
+    {"question": "미국의 수도는?", "options": ["뉴욕", "로스앤젤레스", "워싱턴DC", "시카고"], "answer": "워싱턴DC"},
+    {"question": "사과는 무엇인가?", "options": ["야채", "과일", "곡물", "고기"], "answer": "과일"},
+    {"question": "당근은 무엇인가?", "options": ["과일", "고기", "야채", "곡물"], "answer": "야채"},
+    {"question": "쌀은 무엇인가?", "options": ["과일", "고기", "야채", "곡물"], "answer": "곡물"},
+    {"question": "소는 무엇인가?", "options": ["야채", "과일", "포유류", "곤충"], "answer": "포유류"},
+    {"question": "개는 무엇인가?", "options": ["고양이", "물고기", "포유류", "파충류"], "answer": "포유류"},
+    {"question": "전화기의 발명자는?", "options": ["에디슨", "갈릴레이", "알렉산더 벨", "라이트형제"], "answer": "알렉산더 벨"},
+    {"question": "전기 불빛의 발명자는?", "options": ["알렉산더 벨", "에디슨", "갈릴레이", "라이트형제"], "answer": "에디슨"},
+    {"question": "비행기의 발명자는?", "options": ["에디슨", "알렉산더 벨", "갈릴레이", "라이트형제"], "answer": "라이트형제"},
+    {"question": "달에 처음 도착한 우주비행사는?", "options": ["버즈 올드린", "닐 암스트롱", "찰리 듀크", "피트 콘래드"], "answer": "닐 암스트롱"},
+    {"question": "올림픽의 상징은?", "options": ["한 개의 고리", "다섯 개의 고리", "세 개의 고리", "열 개의 고리"], "answer": "다섯 개의 고리"},
+    {"question": "FIFA 월드컵은 몇 년마다 열리는가?", "options": ["2년", "4년", "6년", "8년"], "answer": "4년"},
+    {"question": "배구 팀은 몇 명으로 구성되나?", "options": ["5명", "6명", "7명", "8명"], "answer": "6명"},
+    {"question": "농구 팀은 몇 명으로 구성되나?", "options": ["4명", "5명", "6명", "7명"], "answer": "5명"},
+    {"question": "야구는 몇 이닝으로 진행되나?", "options": ["7이닝", "8이닝", "9이닝", "10이닝"], "answer": "9이닝"},
+    {"question": "테니스에서 4판을 이겨야 하는 세트는?", "options": ["1세트", "2세트", "3세트", "4세트"], "answer": "3세트"},
+    {"question": "수도권의 정의는?", "options": ["서울의 교외 지역", "서울과 주변 지역", "대도시 지역", "산업 지역"], "answer": "서울과 주변 지역"},
+    {"question": "책은 무엇인가?", "options": ["음식", "의류", "정보 매체", "도구"], "answer": "정보 매체"},
+    {"question": "연필의 짝은?", "options": ["펜", "지우개", "칠판", "분필"], "answer": "지우개"},
+    {"question": "학교에서 배우는 것은?", "options": ["요리", "지식", "운동", "음악"], "answer": "지식"},
+    {"question": "병원의 의사는?", "options": ["요리사", "환자", "의료인", "상점원"], "answer": "의료인"},
+    {"question": "신발은 어디에 신나?", "options": ["손", "발", "머리", "목"], "answer": "발"},
+    {"question": "모자는 어디에 쓰나?", "options": ["발", "손", "머리", "팔"], "answer": "머리"},
+    {"question": "시계의 작은 바늘은?", "options": ["분", "초", "시간", "요일"], "answer": "시간"},
+    {"question": "시계의 큰 바늘은?", "options": ["시간", "초", "분", "요일"], "answer": "분"},
 ]
 
 # --- 2. 게임 초기화 및 상태 관리 ---
 def initialize_quiz():
+    """퀴즈 게임 초기화 - 100개 중 5개 랜덤 선택"""
+    st.session_state.selected_questions = random.sample(QUIZ_QUESTIONS, 5)
     st.session_state.question_index = 0
     st.session_state.score = 0
     st.session_state.feedback = ""
-    st.session_state.answered = False
-    st.session_state.game_over = False
-
-if 'question_index' not in st.session_state:
-    initialize_quiz()
-
-# --- 3. 게임 로직 함수 ---
-def submit_answer(question, selected_option):
-    if st.session_state.answered: # 이미 답변했다면 무시
-        return
-
-    st.session_state.answered = True
-    if selected_option == question["answer"]:
-        st.session_state.score += 1
-        st.session_state.feedback = "✅ 정답입니다!"
-    else:
-        st.session_state.feedback = f"❌ 오답입니다. 정답은 '{question['answer']}'였습니다."
-    st.rerun()
+    st.session_state.user_answer = None
+    st.session_state.quiz_started = True
 
 def next_question():
-    st.session_state.question_index += 1
-    st.session_state.answered = False
+    """다음 문제로 이동"""
+    if st.session_state.question_index < len(st.session_state.selected_questions) - 1:
+        st.session_state.question_index += 1
+        st.session_state.feedback = ""
+        st.session_state.user_answer = None
+    else:
+        st.session_state.quiz_started = False
+
+def submit_answer(answer):
+    """답변 제출"""
+    current_question = st.session_state.selected_questions[st.session_state.question_index]
+    st.session_state.user_answer = answer
+    
+    if answer == current_question["answer"]:
+        st.session_state.score += 1
+        st.session_state.feedback = f"✅ 정답입니다! (답: {current_question['answer']})"
+    else:
+        st.session_state.feedback = f"❌ 틀렸습니다. (정답: {current_question['answer']})"
+
+# --- 3. 초기화 ---
+if "quiz_started" not in st.session_state:
+    st.session_state.quiz_started = False
+if "question_index" not in st.session_state:
+    st.session_state.question_index = 0
+if "score" not in st.session_state:
+    st.session_state.score = 0
+if "feedback" not in st.session_state:
     st.session_state.feedback = ""
+if "user_answer" not in st.session_state:
+    st.session_state.user_answer = None
+if "selected_questions" not in st.session_state:
+    st.session_state.selected_questions = []
 
-    if st.session_state.question_index >= len(QUIZ_QUESTIONS):
-        st.session_state.game_over = True
-    st.rerun()
+# --- 4. UI 구성 ---
+st.set_page_config(page_title="간단한 퀴즈 게임", layout="centered")
+st.title("🎯 간단한 퀴즈 게임")
 
-def reset_quiz():
-    initialize_quiz()
-    st.rerun()
-
-# --- 4. 게임 화면 구성 ---
-st.title("🧠 재미있는 퀴즈 게임!")
-
-if st.session_state.game_over:
-    st.balloons() # 게임 종료 시 축하 풍선
-    st.success(f"퀴즈가 끝났습니다! 최종 점수: {st.session_state.score} / {len(QUIZ_QUESTIONS)}")
-    if st.button("다시 시작"):
-        reset_quiz()
+if not st.session_state.quiz_started:
+    st.write("### 🎮 100가지 문제 중에서 랜덤으로 5가지 문제를 풀어보세요!")
+    if st.button("퀴즈 시작하기", use_container_width=True, key="start_button"):
+        initialize_quiz()
+        st.rerun()
 else:
-    current_question = QUIZ_QUESTIONS[st.session_state.question_index]
-
-    st.subheader(f"문제 {st.session_state.question_index + 1}. {current_question['question']}")
-
-    # 질문과 옵션 표시
-    # st.radio는 여러 옵션 중 하나를 선택하게 합니다.
-    selected_option = st.radio(
-        "답변을 선택하세요:",
-        options=current_question['options'],
-        key=f"q_{st.session_state.question_index}_radio", # 각 라디오 버튼이 고유하도록 키 설정
-        disabled=st.session_state.answered # 답변했으면 비활성화
-    )
-
-    # 답변 제출 버튼
-    if not st.session_state.answered: # 아직 답변하지 않았을 때만 버튼 활성화
-        if st.button("답변 제출", type="primary", use_container_width=True):
-            submit_answer(current_question, selected_option)
+    # 진행 상황 표시
+    progress = st.session_state.question_index / len(st.session_state.selected_questions)
+    st.progress(progress)
+    
+    # 현재 문제 표시
+    current_question = st.session_state.selected_questions[st.session_state.question_index]
+    st.write(f"### 문제 {st.session_state.question_index + 1}/{len(st.session_state.selected_questions)}")
+    st.write(f"**{current_question['question']}**")
+    
+    # 답변 선택
+    if st.session_state.user_answer is None:
+        for option in current_question["options"]:
+            if st.button(option, use_container_width=True, key=option):
+                submit_answer(option)
+                st.rerun()
     else: # 답변 후 피드백 및 다음 문제 버튼
         if st.session_state.feedback.startswith("✅"):
             st.success(st.session_state.feedback)
@@ -161,9 +181,11 @@ else:
 
         if st.button("다음 문제", use_container_width=True):
             next_question()
+            st.rerun()
 
-st.sidebar.markdown(f"**현재 점수: {st.session_state.score} / {len(QUIZ_QUESTIONS)}**")
-st.sidebar.markdown(f"**진행도: {st.session_state.question_index} / {len(QUIZ_QUESTIONS)}**")
+st.sidebar.markdown(f"**현재 점수: {st.session_state.score} / {len(st.session_state.selected_questions) if st.session_state.selected_questions else 5}**")
+st.sidebar.markdown(f"**진행도: {st.session_state.question_index} / {len(st.session_state.selected_questions) if st.session_state.selected_questions else 5}**")
+
 # 배너 추가
 st.markdown("""
 <div style='text-align: center; margin: 20px 0;'>
