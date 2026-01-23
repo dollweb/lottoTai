@@ -121,7 +121,7 @@ def next_question():
         st.session_state.feedback = ""
         st.session_state.user_answer = None
     else:
-        st.session_state.quiz_started = False
+        st.session_state.quiz_completed = True
 
 def submit_answer(answer):
     """답변 제출"""
@@ -147,12 +147,54 @@ if "user_answer" not in st.session_state:
     st.session_state.user_answer = None
 if "selected_questions" not in st.session_state:
     st.session_state.selected_questions = []
+if "quiz_completed" not in st.session_state:
+    st.session_state.quiz_completed = False
 
 # --- 4. UI 구성 ---
 st.set_page_config(page_title="간단한 퀴즈 게임", layout="centered")
 st.title("🎯 간단한 퀴즈 게임")
 
-if not st.session_state.quiz_started:
+# 게임 완료 화면
+if st.session_state.quiz_completed:
+    st.balloons()
+    st.markdown("---")
+    st.success("🎉 모든 문제를 완료했습니다! 축하합니다! 🎉")
+    
+    # 최종 성적 표시
+    score = st.session_state.score
+    total = len(st.session_state.selected_questions)
+    percentage = (score / total) * 100
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("최종 점수", f"{score}/{total}")
+    with col2:
+        st.metric("정답률", f"{percentage:.1f}%")
+    with col3:
+        if percentage == 100:
+            st.metric("등급", "S (완벽!)")
+        elif percentage >= 80:
+            st.metric("등급", "A (우수!)")
+        elif percentage >= 60:
+            st.metric("등급", "B (좋음!)")
+        else:
+            st.metric("등급", "C (노력!)")
+    
+    st.markdown("---")
+    st.write("### 다시 도전해보세요!")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🔄 다시 시작", use_container_width=True):
+            st.session_state.quiz_completed = False
+            st.session_state.quiz_started = False
+            st.rerun()
+    with col2:
+        if st.button("🏠 홈으로", use_container_width=True):
+            st.session_state.quiz_completed = False
+            st.session_state.quiz_started = False
+            st.rerun()
+
+elif not st.session_state.quiz_started:
     st.write("### 🎮 100가지 문제 중에서 랜덤으로 5가지 문제를 풀어보세요!")
     if st.button("퀴즈 시작하기", use_container_width=True, key="start_button"):
         initialize_quiz()
