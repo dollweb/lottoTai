@@ -151,8 +151,8 @@ if "quiz_completed" not in st.session_state:
     st.session_state.quiz_completed = False
 
 # --- 4. UI 구성 ---
-st.set_page_config(page_title="간단한 퀴즈 게임", layout="centered")
-st.title("🎯 간단한 퀴즈 게임")
+st.set_page_config(page_title="상식 퀴즈 게임", layout="centered")
+st.title("🎯 상식 퀴즈 게임")
 
 # 게임 완료 화면
 if st.session_state.quiz_completed:
