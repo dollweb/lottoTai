@@ -129,7 +129,7 @@ st.markdown("""
 # 타이틀 섹션
 st.markdown("""
 <div class="title-container">
-    <h1>🎮 게임 앱</h1>
+    <h1>🎮 케이트립 게임 앱</h1>
     <p>누구나 게임을 즐기는 경험을 해보세요!</p>
 </div>
 """, unsafe_allow_html=True)
