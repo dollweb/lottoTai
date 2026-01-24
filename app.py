@@ -37,69 +37,54 @@ st.markdown("""
         margin: 10px 0 0 0;
     }
     
-    /* 카드 디자인 */
-    .game-card-container {
-        position: relative; /* 자식 요소인 버튼을 띄우기 위함 */
+    /* st.button을 카드처럼 보이도록 스타일링 */
+    div.stButton > button {
+        /* 김태립9784님의 .game-card 기본 스타일 적용 */
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 20px;
         padding: 30px;
-        margin: 15px 0;
+        margin: 15px 0; /* 컬럼 배치 시 필요 */
         box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 100%; /* 컬럼 내에서 높이 조절 */
-        display: flex; /* 내부 컨텐츠 정렬 */
-        flex-direction: column;
-        justify-content: space-between; /* 상단 제목/설명, 하단 버튼 분리 */
+        
+        width: 100%; /* 컬럼 내에서 가득 차도록 */
+        height: auto; /* 내용에 맞춰 높이 자동 조절 */
+        border: none; /* Streamlit 기본 버튼 테두리 제거 */
+        cursor: pointer;
+        text-align: left; /* 내부 콘텐츠 왼쪽 정렬 */
+        color: inherit; /* 폰트 색상을 내부 요소에서 상속 */
+        white-space: pre-wrap; /* 줄 바꿈 및 공백 유지 */
+        font-family: "NanumGothic", sans-serif; /* 나눔고딕 폰트 적용 */
+        display: flex; /* 내부 텍스트 및 아이콘 정렬을 위해 */
+        flex-direction: column; /* 세로로 배치 */
+        align-items: flex-start; /* 좌측 정렬 */
     }
     
-    .game-card-container:hover {
+    div.stButton > button:hover {
         transform: translateY(-5px);
         box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3);
     }
-    
-    .game-title {
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
+
+    /* 버튼 내부에 텍스트가 있을 때의 스타일 (st.button은 직접 HTML 요소를 포함하지 않으므로, 이 부분이 중요) */
+    /* st.button의 텍스트 레이블 자체는 Span 태그 안에 들어갑니다. */
+    div.stButton > button > div > p { /* Streamlit이 버튼 텍스트를 감싸는 구조 */
+        font-size: 1.8em; /* 제목 폰트 크기 */
+        font-weight: bold; /* 제목 굵기 */
+        color: #333; /* 제목 색상 */
+        margin: 0 0 10px 0; /* 제목 아래 여백 */
+        line-height: 1.2;
     }
     
-    .game-desc {
-        font-size: 1em;
-        color: #555;
-        margin-bottom: 15px;
+    div.stButton > button > div > p:nth-of-type(2) { /* 두 번째 p 태그, 즉 설명 */
+        font-size: 1em; /* 설명 폰트 크기 */
+        font-weight: normal;
+        color: #555; /* 설명 텍스트 색상 */
+        margin-bottom: 0;
         line-height: 1.6;
     }
 
-    .game-title .icon {
-        margin-right: 10px;
-        font-size: 1.2em;
-        color: #667eea;
-    }
-
-    /* st.button을 투명하게 만들고 카드 전체를 덮도록 스타일링 */
-    div.stButton > button.game-invisible-button {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: transparent; /* 배경 투명 */
-        border: none; /* 테두리 없음 */
-        color: transparent; /* 글자 투명 (혹시 모를 텍스트 표시 방지) */
-        box-shadow: none; /* 그림자 없음 */
-        cursor: pointer;
-        z-index: 10; /* 카드 내용 위에 오도록 */
-        padding: 0; /* 패딩 없애기 */
-        margin: 0; /* 마진 없애기 */
-    }
-
-    /* 호버 효과는 카드를 통해 이루어지므로 버튼 자체의 호버 효과는 필요없거나, 투명하게 */
-    div.stButton > button.game-invisible-button:hover {
-        background: rgba(0, 0, 0, 0.05); /* 클릭 감지를 위해 미묘한 호버 효과 추가 가능 */
-    }
+    /* 아이콘 스타일 - st.button 텍스트 안에 이모지를 직접 넣는 방식 */
+    /* 이모지 자체는 span 태그로 감싸지지 않고 텍스트로 인식됩니다. */
     
     /* 카테고리 헤더 */
     .category-header {
@@ -200,18 +185,8 @@ st.markdown('<div class="category-header">🎲 게임 시작하기</div>', unsaf
 col_game1, col_game2 = st.columns(2)
 
 with col_game1:
-    # 1. 먼저 카드 디자인을 마크다운으로 만듭니다.
-    st.markdown("""
-    <div class="game-card-container">
-        <div>
-            <div class="game-title"><span class="icon">🎮</span> 숫자 게임</div>
-            <div class="game-desc">숫자를 맞혀보세요! 스릴 있는 숫자 맞추기 게임으로 당신의 운을 시험해보세요.</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    # 2. 카드 위에 투명한 st.button을 띄웁니다.
-    #    st.button은 텍스트 레이블을 받으며, class를 지정해 투명하게 만듭니다.
-    if st.button(" ", key="number_game_card_btn", use_container_width=True, help="숫자 게임 시작"): # 레이블은 공백으로 둠
+    if st.button("🎮 숫자 게임\n\n숫자를 맞혀보세요! 숫자 맞추기 게임으로 당신의 실력을 시험해보세요.", 
+                 key="number_game_card_btn", use_container_width=True):
         st.switch_page("pages/1_Number Game.py")
 
 # iframe 배너 추가
