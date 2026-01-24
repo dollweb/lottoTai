@@ -59,22 +59,22 @@ MBTI_QUESTIONS = [
 
 # MBTI별 어울리는 MBTI와 연예인 (성별 구분)
 MBTI_INFO = {
-    "ISTJ": {"compatible": "ISFP, INFP", "male_celebrities": "박보검, 이준호", "female_celebrities": "아이유, 박신혜"},
-    "ISFJ": {"compatible": "ISFP, INFP", "male_celebrities": "박신혜, 정해인", "female_celebrities": "설현, 박민영"},
-    "INFJ": {"compatible": "ENFP, ENFJ", "male_celebrities": "정해인, 이준호", "female_celebrities": "문근영, 전지현"},
-    "INTJ": {"compatible": "ENFP, INTP", "male_celebrities": "차승원, 박형식", "female_celebrities": "수지, 전소미"},
-    "ISTP": {"compatible": "ESFJ, ISFJ", "male_celebrities": "공유, 손흥민", "female_celebrities": "유연석, 윤승아"},
-    "ISFP": {"compatible": "ISTJ, ISFJ", "male_celebrities": "뷔, 진", "female_celebrities": "아이유, 제니"},
-    "INFP": {"compatible": "ENTJ, ENFJ", "male_celebrities": "박서준, 윤석열", "female_celebrities": "전지현, 박예진"},
-    "INTP": {"compatible": "ENFP, ENTJ", "male_celebrities": "이준호, 박형식", "female_celebrities": "보아, 이지은"},
-    "ESTP": {"compatible": "ISFJ, ISTJ", "male_celebrities": "손흥민, 지드래곤", "female_celebrities": "수현, 이하나"},
-    "ESFP": {"compatible": "ISFJ, ISTJ", "male_celebrities": "싸이, 제이홉", "female_celebrities": "제니, 현아"},
-    "ENFP": {"compatible": "INTJ, INFJ", "male_celebrities": "카이, 태양", "female_celebrities": "러셀, 가희"},
-    "ENTP": {"compatible": "INFJ, INTJ", "male_celebrities": "리딩만, 더피", "female_celebrities": "보아, 설리"},
-    "ESTJ": {"compatible": "ISFP, ISTP", "male_celebrities": "RM, 이순신", "female_celebrities": "정소민, 은혜"},
-    "ESFJ": {"compatible": "ISFP, ISTP", "male_celebrities": "빅토르", "female_celebrities": "선미, 박민영"},
-    "ENFJ": {"compatible": "INFP, ISFP", "male_celebrities": "이준호, 박해일", "female_celebrities": "한효주, 한지민"},
-    "ENTJ": {"compatible": "ISFP, INFP", "male_celebrities": "이영건, 강소라", "female_celebrities": "전소미, 고윤정"}
+    "ISTJ": {"compatible": "ISFP, INFP", "male_celebrities": [{"name": "박보검", "image": "https://via.placeholder.com/180?text=Park+Bo+Gum"}, {"name": "이준호", "image": "https://via.placeholder.com/180?text=Lee+Jun+Ho"}], "female_celebrities": [{"name": "아이유", "image": "https://via.placeholder.com/180?text=IU"}, {"name": "박신혜", "image": "https://via.placeholder.com/180?text=Park+Shin+Hye"}]},
+    "ISFJ": {"compatible": "ISFP, INFP", "male_celebrities": [{"name": "박신혜", "image": "https://via.placeholder.com/180?text=Park+Shin+Hye"}, {"name": "정해인", "image": "https://via.placeholder.com/180?text=Jung+Hae+In"}], "female_celebrities": [{"name": "설현", "image": "https://via.placeholder.com/180?text=Seol+Hyun"}, {"name": "박민영", "image": "https://via.placeholder.com/180?text=Park+Min+Young"}]},
+    "INFJ": {"compatible": "ENFP, ENFJ", "male_celebrities": [{"name": "정해인", "image": "https://via.placeholder.com/180?text=Jung+Hae+In"}, {"name": "이준호", "image": "https://via.placeholder.com/180?text=Lee+Jun+Ho"}], "female_celebrities": [{"name": "문근영", "image": "https://via.placeholder.com/180?text=Moon+Geun+Young"}, {"name": "전지현", "image": "https://via.placeholder.com/180?text=Jun+Ji+Hyun"}]},
+    "INTJ": {"compatible": "ENFP, INTP", "male_celebrities": [{"name": "차승원", "image": "https://via.placeholder.com/180?text=Cha+Seung+Won"}, {"name": "박형식", "image": "https://via.placeholder.com/180?text=Park+Hyung+Sik"}], "female_celebrities": [{"name": "수지", "image": "https://via.placeholder.com/180?text=Suzy"}, {"name": "전소미", "image": "https://via.placeholder.com/180?text=Jeon+So+Mi"}]},
+    "ISTP": {"compatible": "ESFJ, ISFJ", "male_celebrities": [{"name": "공유", "image": "https://via.placeholder.com/180?text=Gong+Yoo"}, {"name": "손흥민", "image": "https://via.placeholder.com/180?text=Son+Heung+Min"}], "female_celebrities": [{"name": "유연석", "image": "https://via.placeholder.com/180?text=Yoo+Yeon+Seok"}, {"name": "윤승아", "image": "https://via.placeholder.com/180?text=Yoon+Seung+A"}]},
+    "ISFP": {"compatible": "ISTJ, ISFJ", "male_celebrities": [{"name": "뷔", "image": "https://via.placeholder.com/180?text=V+BTS"}, {"name": "진", "image": "https://via.placeholder.com/180?text=Jin+BTS"}], "female_celebrities": [{"name": "아이유", "image": "https://via.placeholder.com/180?text=IU"}, {"name": "제니", "image": "https://via.placeholder.com/180?text=Jennie+BLACKPINK"}]},
+    "INFP": {"compatible": "ENTJ, ENFJ", "male_celebrities": [{"name": "박서준", "image": "https://via.placeholder.com/180?text=Park+Seo+Joon"}, {"name": "윤석열", "image": "https://via.placeholder.com/180?text=Yoon+Seok+Yeol"}], "female_celebrities": [{"name": "전지현", "image": "https://via.placeholder.com/180?text=Jun+Ji+Hyun"}, {"name": "박예진", "image": "https://via.placeholder.com/180?text=Park+Ye+Jin"}]},
+    "INTP": {"compatible": "ENFP, ENTJ", "male_celebrities": [{"name": "이준호", "image": "https://via.placeholder.com/180?text=Lee+Jun+Ho"}, {"name": "박형식", "image": "https://via.placeholder.com/180?text=Park+Hyung+Sik"}], "female_celebrities": [{"name": "보아", "image": "https://via.placeholder.com/180?text=BoA"}, {"name": "이지은", "image": "https://via.placeholder.com/180?text=Lee+Ji+Eun"}]},
+    "ESTP": {"compatible": "ISFJ, ISTJ", "male_celebrities": [{"name": "손흥민", "image": "https://via.placeholder.com/180?text=Son+Heung+Min"}, {"name": "지드래곤", "image": "https://via.placeholder.com/180?text=G+Dragon"}], "female_celebrities": [{"name": "수현", "image": "https://via.placeholder.com/180?text=Soo+Hyun"}, {"name": "이하나", "image": "https://via.placeholder.com/180?text=Lee+Ha+Na"}]},
+    "ESFP": {"compatible": "ISFJ, ISTJ", "male_celebrities": [{"name": "싸이", "image": "https://via.placeholder.com/180?text=PSY"}, {"name": "제이홉", "image": "https://via.placeholder.com/180?text=J+Hope+BTS"}], "female_celebrities": [{"name": "제니", "image": "https://via.placeholder.com/180?text=Jennie+BLACKPINK"}, {"name": "현아", "image": "https://via.placeholder.com/180?text=HyunA"}]},
+    "ENFP": {"compatible": "INTJ, INFJ", "male_celebrities": [{"name": "카이", "image": "https://via.placeholder.com/180?text=Kai+EXO"}, {"name": "태양", "image": "https://via.placeholder.com/180?text=Taeyang"}], "female_celebrities": [{"name": "러셀", "image": "https://via.placeholder.com/180?text=Russell"}, {"name": "가희", "image": "https://via.placeholder.com/180?text=Ga+Hee"}]},
+    "ENTP": {"compatible": "INFJ, INTJ", "male_celebrities": [{"name": "리딩만", "image": "https://via.placeholder.com/180?text=Reedingman"}, {"name": "더피", "image": "https://via.placeholder.com/180?text=The+Quiett"}], "female_celebrities": [{"name": "보아", "image": "https://via.placeholder.com/180?text=BoA"}, {"name": "설리", "image": "https://via.placeholder.com/180?text=Sulli"}]},
+    "ESTJ": {"compatible": "ISFP, ISTP", "male_celebrities": [{"name": "RM", "image": "https://via.placeholder.com/180?text=RM+BTS"}, {"name": "이순신", "image": "https://via.placeholder.com/180?text=Lee+Soon+Shin"}], "female_celebrities": [{"name": "정소민", "image": "https://via.placeholder.com/180?text=Jung+So+Min"}, {"name": "은혜", "image": "https://via.placeholder.com/180?text=Eun+Hye"}]},
+    "ESFJ": {"compatible": "ISFP, ISTP", "male_celebrities": [{"name": "빅토르", "image": "https://via.placeholder.com/180?text=Victor"}], "female_celebrities": [{"name": "선미", "image": "https://via.placeholder.com/180?text=Sunmi"}, {"name": "박민영", "image": "https://via.placeholder.com/180?text=Park+Min+Young"}]},
+    "ENFJ": {"compatible": "INFP, ISFP", "male_celebrities": [{"name": "이준호", "image": "https://via.placeholder.com/180?text=Lee+Jun+Ho"}, {"name": "박해일", "image": "https://via.placeholder.com/180?text=Park+Hae+Il"}], "female_celebrities": [{"name": "한효주", "image": "https://via.placeholder.com/180?text=Han+Hyo+Joo"}, {"name": "한지민", "image": "https://via.placeholder.com/180?text=Han+Ji+Min"}]},
+    "ENTJ": {"compatible": "ISFP, INFP", "male_celebrities": [{"name": "이영건", "image": "https://via.placeholder.com/180?text=Lee+Young+Gun"}, {"name": "강소라", "image": "https://via.placeholder.com/180?text=Kang+So+Ra"}], "female_celebrities": [{"name": "전소미", "image": "https://via.placeholder.com/180?text=Jeon+So+Mi"}, {"name": "고윤정", "image": "https://via.placeholder.com/180?text=Go+Yoon+Jung"}]}
 }
 
 # --- 2. 게임 초기화 및 상태 관리 ---
@@ -214,7 +214,12 @@ else:
         st.info(f"💑 어울리는 MBTI\n{mbti_data['compatible']}")
     
     with col2:
-        st.warning(f"⭐ {celebrity_label}\n{celebrities}")
+        st.subheader(f"⭐ {celebrity_label}")
+        # 연예인 사진 표시
+        celeb_cols = st.columns(len(celebrities))
+        for idx, (celeb_col, celebrity) in enumerate(zip(celeb_cols, celebrities)):
+            with celeb_col:
+                st.image(celebrity['image'], caption=celebrity['name'], use_column_width=True)
     
     # MBTI 설명
     st.divider()
