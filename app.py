@@ -183,19 +183,16 @@ st.markdown('<div class="category-header">🎲 숫자 게임</div>', unsafe_allo
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
-    <div class="game-card">
-        <div class="game-title">🎮 숫자 게임</div>
-        <div class="game-desc">숫자를 맞혀보세요! 스릴 있는 숫자 맞추기 게임으로 당신의 운을 시험해보세요.</div>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("🎮 숫자 게임 시작 →", key="number_btn"):
-        st.switch_page("pages/4_Number Game.py")
+    st.button("""
+    <div class="game-title"><span class="icon">🎮</span> 숫자 게임</div>
+    <div class="game-desc">숫자를 맞혀보세요! 스릴 있는 숫자 맞추기 게임으로 당신의 운을 시험해보세요.</div>
+    """, unsafe_allow_html=True, key="number_game_card_btn"):
+        st.switch_page("pages/1_Number Game.py")
 
 # iframe 배너 추가
 st.markdown("""
 <div style='text-align: center; margin: 20px 0;'>
-    <iframe src="https://coupa.ng/cf3Jkx" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+    <iframe src="https://coupa.ng/clptOA" width="100%" height="44" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
 </div>
 """, unsafe_allow_html=True)
 
