@@ -46,6 +46,7 @@ if not st.session_state.game_over:
 
 # 게임이 끝났을 때 '새 게임' 버튼을 보여줍니다.
 if st.session_state.game_over:
+    st.balloons() # 축하 풍선 표시
     if st.button("새 게임 시작"):
         initialize_game() # 게임 초기화
         st.rerun() # 화면을 다시 그려 새 게임 시작
