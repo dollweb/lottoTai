@@ -143,7 +143,11 @@ def submit_answer(question, selected_option):
         st.session_state.feedback = "✅ 정답입니다!"
     else:
         st.session_state.feedback = f"❌ 오답입니다. 정답은 '{question['answer']}'였습니다."
-    st.rerun()
+    
+    # 1초 후 자동으로 다음 문제로 넘어감
+    import time
+    time.sleep(1)
+    next_question()
 
 def next_question():
     st.session_state.question_index += 1
@@ -163,7 +167,30 @@ st.title("🧠 재미있는 퀴즈 게임!")
 
 if st.session_state.game_over:
     st.balloons()  # 게임 완료 시 축하 풍선
-    st.success(f"퀴즈가 끝났습니다! 최종 점수: {st.session_state.score} / {len(st.session_state.quiz_questions)}")
+    
+    # 점수 계산
+    total_questions = len(st.session_state.quiz_questions)
+    percentage = (st.session_state.score / total_questions) * 100
+    
+    # 점수 표시
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("맞춘 개수", f"{st.session_state.score}/{total_questions}")
+    with col2:
+        st.metric("정답률", f"{percentage:.1f}%")
+    with col3:
+        if percentage == 100:
+            st.metric("등급", "🏆 완벽!")
+        elif percentage >= 80:
+            st.metric("등급", "⭐ 훌륭함")
+        elif percentage >= 60:
+            st.metric("등급", "👍 좋음")
+        else:
+            st.metric("등급", "📚 다시 풀기")
+    
+    st.divider()
+    st.success(f"퀴즈가 끝났습니다! 최종 점수: {st.session_state.score} / {total_questions} ({percentage:.1f}%)")
+    
     if st.button("다시 시작"):
         reset_quiz()
 else:

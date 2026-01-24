@@ -47,6 +47,31 @@ if not st.session_state.game_over:
 # 게임이 끝났을 때 '새 게임' 버튼을 보여줍니다.
 if st.session_state.game_over:
     st.balloons() # 축하 풍선 표시
+    
+    # 시도 횟수에 따른 등급 결정
+    attempts = st.session_state.attempts
+    if attempts <= 5:
+        grade = "🏆 완벽합니다!"
+        color = "green"
+    elif attempts <= 10:
+        grade = "⭐ 훌륭합니다!"
+        color = "blue"
+    elif attempts <= 15:
+        grade = "👍 좋습니다!"
+        color = "orange"
+    else:
+        grade = "📚 계속 도전하세요!"
+        color = "red"
+    
+    # 결과 표시
+    st.success(f"정답입니다! 정답은 {st.session_state.secret_number}입니다.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("시도 횟수", f"{attempts}회")
+    with col2:
+        st.info(grade)
+    
     if st.button("새 게임 시작"):
         initialize_game() # 게임 초기화
         st.rerun() # 화면을 다시 그려 새 게임 시작
