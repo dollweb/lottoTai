@@ -37,17 +37,22 @@ st.markdown("""
         margin: 10px 0 0 0;
     }
     
-    /* 게임 카드 스타일 */
-    .game-card {
+    /* 카드 디자인 */
+    .game-card-container {
+        position: relative; /* 자식 요소인 버튼을 띄우기 위함 */
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 20px;
         padding: 30px;
         margin: 15px 0;
         box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%; /* 컬럼 내에서 높이 조절 */
+        display: flex; /* 내부 컨텐츠 정렬 */
+        flex-direction: column;
+        justify-content: space-between; /* 상단 제목/설명, 하단 버튼 분리 */
     }
     
-    .game-card:hover {
+    .game-card-container:hover {
         transform: translateY(-5px);
         box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3);
     }
@@ -57,6 +62,8 @@ st.markdown("""
         font-weight: bold;
         color: #333;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
     }
     
     .game-desc {
@@ -65,24 +72,33 @@ st.markdown("""
         margin-bottom: 15px;
         line-height: 1.6;
     }
-    
-    /* 버튼 스타일 */
-    .game-button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-block;
+
+    .game-title .icon {
+        margin-right: 10px;
+        font-size: 1.2em;
+        color: #667eea;
     }
-    
-    .game-button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+
+    /* st.button을 투명하게 만들고 카드 전체를 덮도록 스타일링 */
+    div.stButton > button.game-invisible-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent; /* 배경 투명 */
+        border: none; /* 테두리 없음 */
+        color: transparent; /* 글자 투명 (혹시 모를 텍스트 표시 방지) */
+        box-shadow: none; /* 그림자 없음 */
+        cursor: pointer;
+        z-index: 10; /* 카드 내용 위에 오도록 */
+        padding: 0; /* 패딩 없애기 */
+        margin: 0; /* 마진 없애기 */
+    }
+
+    /* 호버 효과는 카드를 통해 이루어지므로 버튼 자체의 호버 효과는 필요없거나, 투명하게 */
+    div.stButton > button.game-invisible-button:hover {
+        background: rgba(0, 0, 0, 0.05); /* 클릭 감지를 위해 미묘한 호버 효과 추가 가능 */
     }
     
     /* 카테고리 헤더 */
@@ -105,6 +121,7 @@ st.markdown("""
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         text-align: center;
         flex: 1;
+        height: 100%; /* 일정한 높이 유지 */
     }
     
     .feature-icon {
@@ -178,16 +195,23 @@ with col4:
 
 # 게임 섹션
 st.markdown("---")
-st.markdown('<div class="category-header">🎲 숫자 게임</div>', unsafe_allow_html=True)
+st.markdown('<div class="category-header">🎲 게임 시작하기</div>', unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+col_game1, col_game2 = st.columns(2)
 
-with col1:
-    # st.button을 if 문으로 감싸고, CSS를 통해 카드처럼 보이게 합니다.
-    if st.button("""
-    <div class="game-title"><span class="icon">🎮</span> 숫자 게임</div>
-    <div class="game-desc">숫자를 맞혀보세요! 숫자 맞추기 게임으로 당신의 실력을 시험해보세요.</div>
-    """, unsafe_allow_html=True, key="number_game_card_btn"):
+with col_game1:
+    # 1. 먼저 카드 디자인을 마크다운으로 만듭니다.
+    st.markdown("""
+    <div class="game-card-container">
+        <div>
+            <div class="game-title"><span class="icon">🎮</span> 숫자 게임</div>
+            <div class="game-desc">숫자를 맞혀보세요! 스릴 있는 숫자 맞추기 게임으로 당신의 운을 시험해보세요.</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    # 2. 카드 위에 투명한 st.button을 띄웁니다.
+    #    st.button은 텍스트 레이블을 받으며, class를 지정해 투명하게 만듭니다.
+    if st.button(" ", key="number_game_card_btn", use_container_width=True, help="숫자 게임 시작"): # 레이블은 공백으로 둠
         st.switch_page("pages/1_Number Game.py")
 
 # iframe 배너 추가
