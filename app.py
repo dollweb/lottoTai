@@ -183,7 +183,8 @@ st.markdown('<div class="category-header">🎲 숫자 게임</div>', unsafe_allo
 col1, col2 = st.columns(2)
 
 with col1:
-    st.button("""
+    # st.button을 if 문으로 감싸고, CSS를 통해 카드처럼 보이게 합니다.
+    if st.button("""
     <div class="game-title"><span class="icon">🎮</span> 숫자 게임</div>
     <div class="game-desc">숫자를 맞혀보세요! 숫자 맞추기 게임으로 당신의 실력을 시험해보세요.</div>
     """, unsafe_allow_html=True, key="number_game_card_btn"):
